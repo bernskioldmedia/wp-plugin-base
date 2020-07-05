@@ -1,6 +1,6 @@
 <?php
 
-namespace BernskioldMedia\WP\PluginBase;
+namespace BernskioldMedia\WP\PluginBase\Abstracts;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package BernskioldMedia\WP\PluginBase
  */
-abstract class Plugin {
+abstract class Base_Plugin {
 
 	/**
 	 * Version
@@ -87,7 +87,7 @@ abstract class Plugin {
 	/**
 	 * Hooks that are run on the time of init.
 	 */
-	private function init_hooks(): void {
+	protected function init_hooks(): void {
 		add_action( 'init', [ self::class, 'load_languages' ] );
 	}
 
