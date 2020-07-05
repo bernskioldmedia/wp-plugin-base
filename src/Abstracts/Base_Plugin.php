@@ -42,14 +42,14 @@ abstract class Base_Plugin {
 	/**
 	 * Plugin Class Instance Variable
 	 *
-	 * @var object
+	 * @var static
 	 */
 	protected static $_instance = null;
 
 	/**
 	 * Plugin Instantiator
 	 *
-	 * @return object
+	 * @return static
 	 */
 	public static function instance() {
 
