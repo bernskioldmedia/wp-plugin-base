@@ -3,7 +3,6 @@
   "description": "A WordPress plugin base that contains helpful base classes and functions that we can extend upon when developing WordPress plugins.",
   "type": "library",
   "require": {
-    "composer/installers": "~1.0",
     "php": ">=7.2"
   },
   "require-dev": {
