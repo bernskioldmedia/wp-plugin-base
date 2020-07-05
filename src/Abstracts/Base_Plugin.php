@@ -53,11 +53,11 @@ abstract class Base_Plugin {
 	 */
 	public static function instance() {
 
-		if ( is_null( self::$_instance ) ) {
-			self::$_instance = new static();
+		if ( is_null( static::$_instance ) ) {
+			static::$_instance = new static();
 		}
 
-		return self::$_instance;
+		return static::$_instance;
 
 	}
 
@@ -88,7 +88,7 @@ abstract class Base_Plugin {
 	 * Hooks that are run on the time of init.
 	 */
 	protected function init_hooks(): void {
-		add_action( 'init', [ self::class, 'load_languages' ] );
+		add_action( 'init', [ static::class, 'load_languages' ] );
 	}
 
 	/**
@@ -97,15 +97,15 @@ abstract class Base_Plugin {
 	public static function load_languages(): void {
 
 		$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
-		$locale = apply_filters( 'plugin_locale', $locale, self::get_textdomain() );
+		$locale = apply_filters( 'plugin_locale', $locale, static::get_textdomain() );
 
-		unload_textdomain( self::get_textdomain() );
+		unload_textdomain( static::get_textdomain() );
 
 		// Start checking in the main language dir.
-		load_textdomain( self::get_textdomain(), WP_LANG_DIR . '/' . self::get_textdomain() . '/' . self::get_textdomain() . '-' . $locale . '.mo' );
+		load_textdomain( static::get_textdomain(), WP_LANG_DIR . '/' . static::get_textdomain() . '/' . static::get_textdomain() . '-' . $locale . '.mo' );
 
 		// Otherwise, load from the plugin.
-		load_plugin_textdomain( self::get_textdomain(), false, self::get_path( 'languages/' ) );
+		load_plugin_textdomain( static::get_textdomain(), false, static::get_path( 'languages/' ) );
 
 	}
 
@@ -118,7 +118,7 @@ abstract class Base_Plugin {
 	 * @return string
 	 */
 	public static function get_path( $file = '' ): string {
-		return untrailingslashit( plugin_dir_path( self::$plugin_file_path ) ) . '/' . $file;
+		return untrailingslashit( plugin_dir_path( static::$plugin_file_path ) ) . '/' . $file;
 	}
 
 	/**
@@ -130,7 +130,7 @@ abstract class Base_Plugin {
 	 * @return string
 	 */
 	public static function get_url( $file = '' ): string {
-		return untrailingslashit( plugin_dir_url( self::$plugin_file_path ) ) . '/' . $file;
+		return untrailingslashit( plugin_dir_url( static::$plugin_file_path ) ) . '/' . $file;
 	}
 
 	/**
@@ -142,7 +142,7 @@ abstract class Base_Plugin {
 	 * @return string
 	 */
 	public static function get_assets_url( $file = '' ): string {
-		return self::get_url( 'assets/' . $file );
+		return static::get_url( 'assets/' . $file );
 	}
 
 	/**
@@ -160,7 +160,7 @@ abstract class Base_Plugin {
 	 * @return string
 	 */
 	public static function get_version(): string {
-		return self::$version;
+		return static::$version;
 	}
 
 	/**
@@ -169,7 +169,7 @@ abstract class Base_Plugin {
 	 * @return string
 	 */
 	public static function get_database_version(): string {
-		return self::$datbase_version;
+		return static::$datbase_version;
 	}
 
 	/**
@@ -178,7 +178,7 @@ abstract class Base_Plugin {
 	 * @return string
 	 */
 	public static function get_textdomain(): string {
-		return self::$textdomain;
+		return static::$textdomain;
 	}
 
 }
