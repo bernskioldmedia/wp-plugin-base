@@ -267,7 +267,7 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 		];
 
 		foreach ( static::$default_permissions['administrator'] as $permission => $is_granted ) {
-			$capabilities[ $permission . '_posts' ] = self::add_key_to_capability( $permission );
+			$capabilities[ $permission . '_posts' ] = static::add_key_to_capability( $permission );
 		}
 
 		return $capabilities;

@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.0.2] - 2020-07-06
+
+## Fixed
+- An issue where abstract classes where not resolving the static values.
 
 ## [1.0.1] - 2020-07-05
 

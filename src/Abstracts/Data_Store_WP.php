@@ -207,7 +207,7 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 		}
 
 		foreach ( static::$metadata as $meta ) {
-			self::register_rest_field( $meta, function ( $object ) use ( $meta ) {
+			static::register_rest_field( $meta, function ( $object ) use ( $meta ) {
 
 				/**
 				 * Get Callback

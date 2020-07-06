@@ -10,7 +10,7 @@ trait Has_REST_Endpoints {
 	 * Load the data stores.
 	 */
 	public function boot_rest_endpoints() {
-		foreach ( self::$rest_endpoints as $endpoint ) {
+		foreach ( static::$rest_endpoints as $endpoint ) {
 			( new $endpoint() )->load();
 		}
 	}

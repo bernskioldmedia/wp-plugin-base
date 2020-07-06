@@ -311,7 +311,7 @@ abstract class Taxonomy extends Data_Store_WP {
 		$capabilities = [];
 
 		foreach ( static::$default_permissions['administrator'] as $permission => $is_granted ) {
-			$capabilities[ $permission . '_terms' ] = self::add_key_to_capability( $permission );
+			$capabilities[ $permission . '_terms' ] = static::add_key_to_capability( $permission );
 		}
 
 		return $capabilities;
