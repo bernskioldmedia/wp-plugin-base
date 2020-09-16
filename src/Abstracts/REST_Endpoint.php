@@ -69,7 +69,7 @@ abstract class REST_Endpoint extends \WP_REST_Controller implements REST_Endpoin
 	/**
 	 * Setup Extension
 	 */
-	public function __construct() {
+	public function load() {
 		$this->setup_routes();
 	}
 
