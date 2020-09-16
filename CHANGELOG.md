@@ -4,9 +4,15 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.0.3] - 2020-09-16
+
+### Fixed
+- Adding routes with REST was forced to return an array, should not need to return anything.
+- REST endpoints calls a load function, but the load function wasn't present.
+
 ## [1.0.2] - 2020-07-06
 
-## Fixed
+### Fixed
 - An issue where abstract classes where not resolving the static values.
 
 ## [1.0.1] - 2020-07-05
