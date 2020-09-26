@@ -23,7 +23,7 @@ abstract class Base_Plugin {
 	 *
 	 * @var string
 	 */
-	protected static $datbase_version = '1000';
+	protected static $database_version = '1000';
 
 	/**
 	 * Plugin Textdomain
@@ -81,7 +81,15 @@ abstract class Base_Plugin {
 	 * Constructor
 	 */
 	public function __construct() {
-		$this->init_hooks();
+
+		if ( method_exists( static::class, 'has_dependencies' ) ) {
+			if ( static::has_dependencies() ) {
+				$this->init_hooks();
+			}
+		} else {
+			$this->init_hooks();
+		}
+
 	}
 
 	/**
@@ -105,7 +113,7 @@ abstract class Base_Plugin {
 		load_textdomain( static::get_textdomain(), WP_LANG_DIR . '/' . static::get_textdomain() . '/' . static::get_textdomain() . '-' . $locale . '.mo' );
 
 		// Otherwise, load from the plugin.
-		load_plugin_textdomain( static::get_textdomain(), false, static::get_path( 'languages/' ) );
+		load_plugin_textdomain( static::get_textdomain(), false, dirname( plugin_basename( static::$plugin_file_path ) ) . '/languages' );
 
 	}
 
@@ -169,7 +177,7 @@ abstract class Base_Plugin {
 	 * @return string
 	 */
 	public static function get_database_version(): string {
-		return static::$datbase_version;
+		return static::$database_version;
 	}
 
 	/**
