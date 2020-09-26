@@ -126,6 +126,52 @@ abstract class Data implements Data_Interface {
 	}
 
 	/**
+	 * Get Date Prop
+	 *
+	 * @param  string  $field_key
+	 * @param  string  $format
+	 *
+	 * @return string|null
+	 */
+	protected function get_date_prop( string $field_key, string $format = 'Y-m-d' ): ?string {
+		$date = $this->get_prop( $field_key );
+
+		if ( ! $date ) {
+			return null;
+		}
+
+		return wp_date( $format, strtotime( $date ) );
+	}
+
+	/**
+	 * Get Boolean Prop
+	 *
+	 * @param  string  $field_key
+	 *
+	 * @return bool|null
+	 */
+	protected function get_bool_prop( string $field_key ): ?bool {
+		return $this->get_prop( $field_key ) ? true : false;
+	}
+
+	/**
+	 * Get Term ID prop from WP Term returning field.
+	 *
+	 * @param  string  $field_key
+	 *
+	 * @return int|null
+	 */
+	protected function get_term_id_prop( string $field_key ): ?int {
+		$object = $this->get_prop( $field_key );
+
+		if ( ! $object ) {
+			return null;
+		}
+
+		return $object->term_id;
+	}
+
+	/**
 	 * Check if user can work with the object in question.
 	 * As type, this function takes: "edit", "delete" and "view".
 	 *
