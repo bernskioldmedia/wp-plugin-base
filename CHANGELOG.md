@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.0.4] - 2020-09-26
+
+## Added
+- Helper methods for getting ACF data for boolean, term ID and dates.
+
+## Changed
+- We now honor our dependency checker method in the constructor call.
+
+## Removed
+- In `Data_Store_WP` an action was hooked to `bm_events_init`. This has been removed.
+
+## Fixed
+- Spelling mistake where property `$database_version` was misspelt.
+- Textdomains were not loading properly, this is now fixed.
+- The datastore exception class was not named properly, causing it to fail.
+
+
 ## [1.0.3] - 2020-09-16
 
 ### Fixed
