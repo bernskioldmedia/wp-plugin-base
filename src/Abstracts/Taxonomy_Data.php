@@ -32,23 +32,23 @@ abstract class Taxonomy_Data extends Data {
 	/**
 	 * Get Property
 	 *
-	 * @param  string $field_key
+	 * @param  string  $field_key
 	 *
 	 * @return mixed|null
 	 */
-	protected function get_prop( $field_key ) {
+	protected function get_prop( string $field_key ) {
 		return get_field( $field_key, $this->get_id_for_acf() );
 	}
 
 	/**
 	 * Set property
 	 *
-	 * @param  string $field_key
-	 * @param  mixed  $new_value
+	 * @param  string  $field_key
+	 * @param  mixed   $new_value
 	 *
 	 * @return bool|int|mixed
 	 */
-	protected function set_prop( $field_key, $new_value ) {
+	protected function set_prop( string $field_key, $new_value ) {
 		return update_field( $field_key, $new_value, $this->get_id_for_acf() );
 	}
 

@@ -62,7 +62,6 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 	 */
 	public function __construct() {
 		add_action( 'init', [ static::class, 'register' ], 10 );
-		add_action( 'bm_event_install', [ static::class, 'register' ] );
 
 		if ( method_exists( static::class, 'fields' ) ) {
 			add_action( 'acf/init', [ static::class, 'fields' ] );
