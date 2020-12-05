@@ -64,7 +64,7 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 		add_action( 'init', [ static::class, 'register' ], 10 );
 
 		if ( method_exists( static::class, 'fields' ) ) {
-			add_action( 'acf/init', [ static::class, 'fields' ] );
+			add_action( 'init', [ static::class, 'fields' ], 20 );
 		}
 
 		if ( method_exists( static::class, 'admin_columns' ) ) {
