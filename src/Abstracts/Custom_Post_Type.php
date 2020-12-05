@@ -34,7 +34,7 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 	 *
 	 * @var bool
 	 */
-	public static $block_editor = true;
+	protected static $block_editor = true;
 
 	/**
 	 * Default permissions for the post type.
