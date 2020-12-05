@@ -58,6 +58,14 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 	protected static $data_class;
 
 	/**
+	 * When set to true the admin columns in Admin Columns Pro
+	 * will be stored in a directory in this plugin as opposed to in the database.
+	 *
+	 * @var bool
+	 */
+	protected static $store_admin_columns = false;
+
+	/**
 	 * Custom_Post_Type constructor.
 	 */
 	public function __construct() {
