@@ -171,6 +171,38 @@ abstract class Data implements Data_Interface {
 		return $object->term_id;
 	}
 
+	protected function get_taxonomy_prop( string $data_store, bool $multiple = false ) {
+
+		$taxonomy = $data_store::get_key();
+		$terms    = get_the_terms( $this->get_id(), $taxonomy );
+
+		if ( ! $terms || is_wp_error( $terms ) ) {
+			return null;
+		}
+
+		if ( $multiple ) {
+			return $terms;
+		}
+
+		return $terms[0];
+
+	}
+
+	protected function get_taxonomy_string( string $data_store, string $separator = ', ', string $key = 'name' ): string {
+		$terms = $this->get_taxonomy_prop( $data_store, true );
+
+		if ( ! $terms ) {
+			return '';
+		}
+
+		$output = [];
+		foreach ( $terms as $term ) {
+			$output[] = $term->{$key};
+		}
+
+		return implode( $separator, $output );
+	}
+
 	/**
 	 * Check if user can work with the object in question.
 	 * As type, this function takes: "edit", "delete" and "view".

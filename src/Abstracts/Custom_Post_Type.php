@@ -307,4 +307,19 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 		return $current_status;
 	}
 
+	public function get_edit_link(): string {
+		$post_type = get_post_type_object( self::$data_store::get_key() );
+
+		if ( ! $post_type ) {
+			return '';
+		}
+
+		if ( $post_type->_edit_link ) {
+			return admin_url( sprintf( $post_type->_edit_link . '&action=edit', $this->get_id() ) );
+		}
+
+		return '';
+
+	}
+
 }
