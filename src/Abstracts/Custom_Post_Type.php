@@ -28,6 +28,15 @@ defined( 'ABSPATH' ) || exit;
 abstract class Custom_Post_Type extends Data_Store_WP {
 
 	/**
+	 * If this is set to false, we automatically deploy a feature to
+	 * disable the block editor for the data store instead using the
+	 * classic editor. Should be used sparingly.
+	 *
+	 * @var bool
+	 */
+	public static $block_editor = true;
+
+	/**
 	 * Default permissions for the post type.
 	 *
 	 * @var \bool[][]
@@ -82,6 +91,14 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 			'delete_published' => false,
 		],
 	];
+
+	public function __construct() {
+		parent::__construct();
+
+		if ( property_exists( static::class, 'block_editor' ) && false === static::$block_editor ) {
+			add_filter( 'use_block_editor_for_post_type', [ static::class, 'disable_block_editor' ], 10, 2 );
+		}
+	}
 
 	/**
 	 * Handle the registration logic here to
@@ -272,6 +289,22 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 
 		return $capabilities;
 
+	}
+
+	/**
+	 * Disable Block Editor for the current post type.
+	 *
+	 * @param  bool    $current_status  Current Block Editor status.
+	 * @param  string  $post_type       Current Post Type Key.
+	 *
+	 * @return bool
+	 */
+	public static function disable_block_editor( bool $current_status, string $post_type ): bool {
+		if ( self::get_key() === $post_type ) {
+			return false;
+		}
+
+		return $current_status;
 	}
 
 }
