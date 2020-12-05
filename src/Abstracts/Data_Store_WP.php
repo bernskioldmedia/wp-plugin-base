@@ -75,10 +75,6 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 			add_action( 'init', [ static::class, 'fields' ], 20 );
 		}
 
-		if ( method_exists( static::class, 'admin_columns' ) ) {
-			add_action( 'ac/ready', [ static::class, 'admin_columns' ] );
-		}
-
 		if ( static::$metadata ) {
 			add_action( 'rest_api_init', [ static::class, 'rest_fields' ] );
 		}
