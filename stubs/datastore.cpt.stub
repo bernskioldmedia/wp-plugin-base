@@ -43,6 +43,14 @@ class {{ class }} extends Data_Stores\Custom_Post_Type {
 	public static $metadata = [];
 
 	/**
+	 * Add the field group class names here to automatically
+	 * load them alongside this data store.
+	 *
+	 * @var string[]
+	 */
+	protected static $field_groups = [];
+
+	/**
 	 * Register Post Type
 	 *
 	 * @see https://codex.wordpress.org/Function_Reference/register_post_type

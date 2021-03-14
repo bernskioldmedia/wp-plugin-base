@@ -33,6 +33,24 @@ class {{ class }} extends Data_Stores\Taxonomy {
 	protected static $post_types = [];
 
 	/**
+	 * Array of metadata (field) keys.
+	 * Should map the getter/setter names in the data class.
+	 *
+	 * Will automatically be made available in the rest endpoint
+	 *
+	 * @var array
+	 */
+	public static $metadata = [];
+
+	/**
+	 * Add the field group class names here to automatically
+	 * load them alongside this data store.
+	 *
+	 * @var string[]
+	 */
+	protected static $field_groups = [];
+
+	/**
 	 * Register the taxonomy.
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/register_taxonomy/
