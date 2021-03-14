@@ -20,12 +20,10 @@ class RestEndpointCommand extends MakeCommand {
 	protected function getReplacements( InputInterface $input ): array {
 		$name = $input->getArgument( 'name' );
 
-		$args = [
+		return [
 			'{{ namespace }}' => $input->getOption( 'namespace' ) . '\\Rest',
 			'{{ class }}'     => u( $name )->camel()->title()->toString(),
 		];
-
-		return $args;
 	}
 
 }

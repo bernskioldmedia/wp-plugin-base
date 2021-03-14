@@ -26,7 +26,7 @@ class DatastoreTaxonomyCommand extends MakeCommand {
 		$humanName       = u( $humanName )->title( true )->toString();
 		$humanPluralName = u( Inflect::pluralize( $humanName ) )->title()->toString();
 
-		$args = [
+		return [
 			'{{ dataStoreNamespace }}'    => $input->getOption( 'namespace' ) . '\\DataStores',
 			'{{ dataNamespace }}'         => $input->getOption( 'namespace' ) . '\\Data',
 			'{{ class }}'                 => u( $name )->camel()->title()->toString(),
@@ -38,8 +38,6 @@ class DatastoreTaxonomyCommand extends MakeCommand {
 			'{{ textdomain }}'            => $input->getOption( 'textdomain' ),
 			'{{ slug }}'                  => str_replace( '_', '-', u( $name )->snake()->toString() ),
 		];
-
-		return $args;
 	}
 
 }
