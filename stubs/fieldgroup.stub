@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use BernskioldMedia\WP\PluginBase\Fields\FieldGroup;
+
+class {{ class }} extends FieldGroup {
+
+	protected static function get_data(): array {
+	    // Generate your field group from the ACF UI
+	    // and then return the resulting fields array here.
+		return [];
+	}
+
+}
