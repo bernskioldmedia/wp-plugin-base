@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }}\Data;
+
+use BernskioldMedia\WP\PluginBase\Data\{{ dataBaseClass }};
+
+defined( 'ABSPATH' ) || exit;
+
+class {{ class }} extends {{ dataBaseClass }} {
+
+	protected static $data_store = {{ namespace }}\DataStores\{{ class }}::class;
+
+	// Add your getters and setters here.
+
+}

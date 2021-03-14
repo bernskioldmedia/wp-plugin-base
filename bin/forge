@@ -14,6 +14,7 @@ $app->add( new BernskioldMedia\WP\PluginBase\Commands\DatastoreCptCommand );
 $app->add( new BernskioldMedia\WP\PluginBase\Commands\DatastoreTaxonomyCommand );
 $app->add( new BernskioldMedia\WP\PluginBase\Commands\RestEndpointCommand );
 $app->add( new BernskioldMedia\WP\PluginBase\Commands\CustomizerCommand );
-$app->add( new BernskioldMedia\WP\PluginBase\Commands\FieldGroupCommand() );
+$app->add( new BernskioldMedia\WP\PluginBase\Commands\FieldGroupCommand );
+$app->add( new BernskioldMedia\WP\PluginBase\Commands\DataCommand );
 
 $app->run();
