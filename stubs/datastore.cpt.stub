@@ -2,14 +2,14 @@
 
 namespace {{ dataStoreNamespace }};
 
-use BernskioldMedia\WP\PluginBase\Data_Stores;
+use BernskioldMedia\WP\PluginBase\DataStores;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class {{ class }}
  */
-class {{ class }} extends Data_Stores\Custom_Post_Type {
+class {{ class }} extends DataStores\Custom_Post_Type {
 
 	/**
 	 * Post Type Key

@@ -2,14 +2,14 @@
 
 namespace {{ dataStoreNamespace }};
 
-use BernskioldMedia\WP\PluginBase\Data_Stores;
+use BernskioldMedia\WP\PluginBase\DataStores;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class {{ class }}
  */
-class {{ class }} extends Data_Stores\Taxonomy {
+class {{ class }} extends DataStores\Taxonomy {
 
 	/**
 	 * Taxonomy Key
