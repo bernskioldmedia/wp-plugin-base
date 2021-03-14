@@ -24,7 +24,7 @@ class CustomizerCommand extends MakeCommand {
 		$args = [
 			'{{ namespace }}' => $input->getOption( 'namespace' ) . '\\Customizer',
 			'{{ class }}'     => u( $name )->camel()->title()->toString(),
-			'{{ prefix }}'    => u( $prefix )->snake()->toString(),
+			'{{ prefix }}'    => u( $input->getOption( 'prefix' ) )->snake()->toString(),
 		];
 
 		return $args;
