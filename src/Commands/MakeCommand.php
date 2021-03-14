@@ -39,7 +39,7 @@ abstract class MakeCommand extends Command {
 		$outputPath = $this->getOutputPath( $name );
 
 		if ( ! is_dir( $outputPath ) ) {
-			mkrdir( $outputPath );
+			mkdir( $outputPath );
 		}
 
 		$this->createFile( $name, $generatedFile );
