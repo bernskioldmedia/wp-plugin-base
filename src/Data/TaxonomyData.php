@@ -18,7 +18,7 @@
  * @since   1.0.0
  */
 
-namespace BernskioldMedia\WP\PluginBase\Abstracts;
+namespace BernskioldMedia\WP\PluginBase\Data;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package BernskioldMedia\WP\PluginBase
  */
-abstract class Taxonomy_Data extends Data {
+abstract class TaxonomyData extends Data {
 
 	/**
 	 * Get Property

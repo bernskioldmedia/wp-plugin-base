@@ -12,11 +12,11 @@ namespace BernskioldMedia\WP\PluginBase\Interfaces;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Interface REST_Endpoint_Interface
+ * Interface RestEndpointInterface
  *
  * @package BernskioldMedia\WP\PluginBase
  */
-interface REST_Endpoint_Interface {
+interface RestEndpointInterface {
 
 	/**
 	 * Register Routes

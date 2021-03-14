@@ -1,17 +1,15 @@
 <?php
 
-namespace BernskioldMedia\WP\PluginBase\Abstracts;
+namespace BernskioldMedia\WP\PluginBase\DataStores;
 
-use BernskioldMedia\WP\PluginBase\Interfaces\Data_Store_Interface;
+use BernskioldMedia\WP\PluginBase\Interfaces\DataStoreInterface;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Data_Store_WP
- *
- * @package BernskioldMedia\WP\Event\Abstracts
  */
-abstract class Data_Store_WP implements Data_Store_Interface {
+abstract class DataStoreWP implements DataStoreInterface {
 
 	/**
 	 * Object Type Key
@@ -66,6 +64,14 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 	protected static $store_admin_columns = false;
 
 	/**
+	 * Add the field group class names here to automatically
+	 * load them alongside this data store.
+	 *
+	 * @var string[]
+	 */
+	protected static $field_groups = [];
+
+	/**
 	 * Custom_Post_Type constructor.
 	 */
 	public function __construct() {
@@ -80,7 +86,14 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 		}
 
 		if ( method_exists( static::class, 'query_modifications' ) ) {
-			add_filter( 'pre_get_posts', [ static::class, 'query_modifications' ], 10, 1 );
+			add_filter( 'pre_get_posts', [ static::class, 'query_modifications' ] );
+		}
+
+		// Load field groups if they exist.
+		if ( ! empty( static::$field_groups ) ) {
+			foreach ( static::$field_groups as $field_group ) {
+				add_action( 'init', [ $field_group, 'make' ], 30 );
+			}
 		}
 
 	}

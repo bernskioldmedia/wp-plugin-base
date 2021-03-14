@@ -15,11 +15,11 @@ namespace BernskioldMedia\WP\PluginBase\Interfaces;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Interface Data_Interface
+ * Interface DataInterface
  *
  * @package BernskioldMedia\WP\PluginBase
  */
-interface Data_Interface {
+interface DataInterface {
 
 	/**
 	 * Get ID

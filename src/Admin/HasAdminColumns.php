@@ -1,6 +1,6 @@
 <?php
 
-namespace BernskioldMedia\WP\PluginBase\Traits;
+namespace BernskioldMedia\WP\PluginBase\Admin;
 
 use AC\ListScreenRepository\Rule;
 use AC\ListScreenRepository\Rules;
@@ -11,13 +11,13 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Trait Has_Admin_Columns
  *
- * Add this trait to the Base_Plugin inherited class to
+ * Add this trait to the BasePlugin inherited class to
  * enable support for saving admin columns. In each post type you
  * may then enable the support for saving admin columns.
  *
  * @package BernskioldMedia\WP\PluginBase\Traits
  */
-trait Has_Admin_Columns {
+trait HasAdminColumns {
 
 	public static function setup_admin_columns_storage_repository( array $repositories, ListScreenRepositoryFactory $factory ) {
 

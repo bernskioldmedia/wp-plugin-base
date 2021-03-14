@@ -4,7 +4,9 @@
   "type": "library",
   "require": {
 	"monolog/monolog": "~1.25",
-	"php": ">=7.2"
+	"php": ">=7.3",
+	"symfony/console": "^5.2",
+	"symfony/process": "5.0"
   },
   "require-dev": {
 	"phpunit/phpunit": "^8.2",
@@ -15,7 +17,7 @@
   "authors": [
 	{
 	  "name": "Bernskiold Media",
-	  "email": "info@bernskioldmedia.com",
+	  "email": "hello@bernskioldmedia.com",
 	  "role": "agency",
 	  "homepage": "https://bernskioldmedia.com"
 	}
@@ -25,8 +27,16 @@
 	  "BernskioldMedia\\WP\\PluginBase\\": "src/"
 	}
   },
+  "bin": [
+	"bin/forge"
+  ],
   "scripts": {
 	"lint": "phpcs .",
 	"lint-fix": "phpcbf ."
-  }
+  },
+  "config": {
+	"sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }

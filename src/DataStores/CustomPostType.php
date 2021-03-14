@@ -14,18 +14,17 @@
  * @since   1.0.0
  */
 
-namespace BernskioldMedia\WP\PluginBase\Abstracts;
+namespace BernskioldMedia\WP\PluginBase\DataStores;
 
-use BernskioldMedia\WP\PluginBase\Exceptions\Data_Store_Exception;
+use BernskioldMedia\WP\PluginBase\Exceptions\DataStoreException;
+use BernskioldMedia\WP\PluginBase\Log;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Custom_Post_Type
- *
- * @package BernskioldMedia\WP\Event
  */
-abstract class Custom_Post_Type extends Data_Store_WP {
+abstract class CustomPostType extends DataStoreWP {
 
 	/**
 	 * If this is set to false, we automatically deploy a feature to
@@ -115,7 +114,7 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 	 * @param  array   $args
 	 *
 	 * @return int
-	 * @throws Data_Store_Exception
+	 * @throws DataStoreException
 	 */
 	public static function create( $name, $args = [] ): int {
 
@@ -123,7 +122,7 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 		 * Check that the required data for creation is set.
 		 */
 		if ( ! $name ) {
-			throw new Data_Store_Exception( 'Tried to create an object, but the object name was not passed in correctly.', $args );
+			throw new DataStoreException( 'Tried to create an object, but the object name was not passed in correctly.', $args );
 		}
 
 		/**
@@ -144,7 +143,7 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 		 * Bail now if we couldn't create.
 		 */
 		if ( is_wp_error( $response ) ) {
-			throw new Data_Store_Exception( 'Tried to create an object, but it failed.', [
+			throw new DataStoreException( 'Tried to create an object, but it failed.', [
 				'error'     => $response->get_error_message(),
 				'post_data' => $post_data,
 			] );
@@ -167,7 +166,7 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 	 * @param  array  $args
 	 *
 	 * @return int
-	 * @throws Data_Store_Exception
+	 * @throws DataStoreException
 	 */
 	public static function update( $object_id, $args = [] ): int {
 
@@ -182,7 +181,7 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 		 * Bail now if we couldn't create.
 		 */
 		if ( is_wp_error( $response ) ) {
-			throw new Data_Store_Exception( 'Tried to update an object, but it failed.', [
+			throw new DataStoreException( 'Tried to update an object, but it failed.', [
 				'error'     => $response->get_error_message(),
 				'post_data' => $data,
 			] );
@@ -204,13 +203,13 @@ abstract class Custom_Post_Type extends Data_Store_WP {
 	 * @param  bool  $skip_trash
 	 *
 	 * @return bool
-	 * @throws Data_Store_Exception
+	 * @throws DataStoreException
 	 */
 	public static function delete( $object_id, $skip_trash = false ): bool {
 		$response = wp_delete_post( $object_id, $skip_trash );
 
 		if ( false === $response ) {
-			throw new Data_Store_Exception( 'Tried to delete object, but it failed.', [
+			throw new DataStoreException( 'Tried to delete object, but it failed.', [
 				'object_id'  => $object_id,
 				'skip_trash' => $skip_trash,
 			] );

@@ -14,9 +14,9 @@
  * @since   1.0.0
  */
 
-namespace BernskioldMedia\WP\PluginBase\Abstracts;
+namespace BernskioldMedia\WP\PluginBase\DataStores;
 
-use BernskioldMedia\WP\PluginBase\Exceptions\Data_Store_Exception;
+use BernskioldMedia\WP\PluginBase\Exceptions\DataStoreException;
 use BernskioldMedia\WP\PluginBase\Log;
 
 defined( 'ABSPATH' ) || exit;
@@ -26,7 +26,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package BernskioldMedia\WP\PluginBase
  */
-abstract class Taxonomy extends Data_Store_WP {
+abstract class Taxonomy extends DataStoreWP {
 
 	/**
 	 * Post type classes which this taxonomy is assigned to.
@@ -88,16 +88,16 @@ abstract class Taxonomy extends Data_Store_WP {
 	 * @param  array   $args
 	 *
 	 * @return int
-	 * @throws Data_Store_Exception
+	 * @throws DataStoreException
 	 */
 	public static function create( $name, $args = [] ): int {
 
 		if ( ! isset( $data['name'] ) ) {
-			throw new Data_Store_Exception( 'Tried to create a term, but the term name was not passed correctly.', [
-					'taxonomy' => static::get_key(),
-					'name'     => $name,
-					'data'     => $args,
-				] );
+			throw new DataStoreException( 'Tried to create a term, but the term name was not passed correctly.', [
+				'taxonomy' => static::get_key(),
+				'name'     => $name,
+				'data'     => $args,
+			] );
 		}
 
 		$existing_term_id = static::does_object_exist( $name );
@@ -115,16 +115,16 @@ abstract class Taxonomy extends Data_Store_WP {
 		 * Handle the error in term creation.
 		 */
 		if ( is_wp_error( $response ) ) {
-			throw new Data_Store_Exception( 'Could not create a new term.', [
-					'name'    => $data['name'],
-					'message' => $response->get_error_message(),
-				] );
+			throw new DataStoreException( 'Could not create a new term.', [
+				'name'    => $data['name'],
+				'message' => $response->get_error_message(),
+			] );
 		}
 
 		Log::info( 'Successfully created a new term.', [
-				'name'    => $data['name'],
-				'term_id' => $response['term_id'],
-			] );
+			'name'    => $data['name'],
+			'term_id' => $response['term_id'],
+		] );
 
 		return (int) $response['term_id'];
 
@@ -137,7 +137,7 @@ abstract class Taxonomy extends Data_Store_WP {
 	 * @param  array  $args
 	 *
 	 * @return int
-	 * @throws Data_Store_Exception
+	 * @throws DataStoreException
 	 */
 	public static function update( $term_id, $args = [] ): int {
 
@@ -151,19 +151,19 @@ abstract class Taxonomy extends Data_Store_WP {
 		 * to make it reliable and consistent.
 		 */
 		if ( is_wp_error( $updated ) ) {
-			throw new Data_Store_Exception( 'Could not update term.', [
-					'taxonomy' => static::get_key(),
-					'name'     => $args['name'],
-					'term_id'  => $term_id,
-					'message'  => $updated->get_error_message(),
-				] );
+			throw new DataStoreException( 'Could not update term.', [
+				'taxonomy' => static::get_key(),
+				'name'     => $args['name'],
+				'term_id'  => $term_id,
+				'message'  => $updated->get_error_message(),
+			] );
 		}
 
 		Log::info( 'Successfully updated the term.', [
-				'taxonomy' => static::get_key(),
-				'term_id'  => $term_id,
-				'name'     => $args['name'],
-			] );
+			'taxonomy' => static::get_key(),
+			'term_id'  => $term_id,
+			'name'     => $args['name'],
+		] );
 
 		return (int) $updated['term_id'];
 
@@ -176,7 +176,7 @@ abstract class Taxonomy extends Data_Store_WP {
 	 * @param  bool  $force_delete
 	 *
 	 * @return bool
-	 * @throws Data_Store_Exception
+	 * @throws DataStoreException
 	 */
 	public static function delete( $term_id, $force_delete = false ): bool {
 
@@ -199,10 +199,10 @@ abstract class Taxonomy extends Data_Store_WP {
 		 * not exist.
 		 */
 		if ( false === $response ) {
-			throw new Data_Store_Exception( 'Tried to delete a term, but the term does not exist.', [
-					'term_id'  => $term_id,
-					'taxonomy' => static::get_key(),
-				] );
+			throw new DataStoreException( 'Tried to delete a term, but the term does not exist.', [
+				'term_id'  => $term_id,
+				'taxonomy' => static::get_key(),
+			] );
 		}
 
 		/**
@@ -210,10 +210,10 @@ abstract class Taxonomy extends Data_Store_WP {
 		 * the default category in WordPress.
 		 */
 		if ( 0 === $response ) {
-			throw new Data_Store_Exception( 'Tried to delete the default category. You must not do this.', [
-					'term_id'  => $term_id,
-					'taxonomy' => static::get_key(),
-				] );
+			throw new DataStoreException( 'Tried to delete the default category. You must not do this.', [
+				'term_id'  => $term_id,
+				'taxonomy' => static::get_key(),
+			] );
 		}
 
 		/**
@@ -221,10 +221,10 @@ abstract class Taxonomy extends Data_Store_WP {
 		 * does not exist.
 		 */
 		if ( is_wp_error( $response ) ) {
-			throw new Data_Store_Exception( 'Tried to delete a term, but the taxonomy did not exist.', [
-					'taxonomy' => static::get_key(),
-					'term_id'  => $term_id,
-				] );
+			throw new DataStoreException( 'Tried to delete a term, but the taxonomy did not exist.', [
+				'taxonomy' => static::get_key(),
+				'term_id'  => $term_id,
+			] );
 		}
 
 		/**
@@ -256,7 +256,7 @@ abstract class Taxonomy extends Data_Store_WP {
 	/**
 	 * Get the post types this taxonomy is assigned to.
 	 *
-	 * @return Custom_Post_Type[]
+	 * @return CustomPostType[]
 	 */
 	public static function get_post_types(): array {
 		return static::$post_types;
@@ -271,7 +271,11 @@ abstract class Taxonomy extends Data_Store_WP {
 		$output = [];
 
 		foreach ( static::get_post_types() as $class ) {
-			$output[] = $class::get_key();
+			if ( class_exists( $class ) ) {
+				$output[] = $class::get_key();
+			} else {
+				$output[] = $class;
+			}
 		}
 
 		return $output;

@@ -18,9 +18,9 @@
  * @since   1.0.0
  */
 
-namespace BernskioldMedia\WP\PluginBase\Abstracts;
+namespace BernskioldMedia\WP\PluginBase\Data;
 
-use BernskioldMedia\WP\PluginBase\Interfaces\Data_Interface;
+use BernskioldMedia\WP\PluginBase\Interfaces\DataInterface;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -29,7 +29,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package BernskioldMedia\WP\Event
  */
-abstract class Data implements Data_Interface {
+abstract class Data implements DataInterface {
 
 	/**
 	 * ID for this object.

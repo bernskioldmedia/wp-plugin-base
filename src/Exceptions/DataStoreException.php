@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package BernskioldMedia\WP\PluginBase\Exceptions
  */
-class Data_Store_Exception extends \Exception {
+class DataStoreException extends \Exception {
 
 	/**
 	 * @var array

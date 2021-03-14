@@ -1,6 +1,6 @@
 <?php
 
-namespace BernskioldMedia\WP\PluginBase\Abstracts;
+namespace BernskioldMedia\WP\PluginBase;
 
 defined( 'ABSPATH' ) || exit;
 

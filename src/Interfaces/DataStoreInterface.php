@@ -15,11 +15,11 @@ namespace BernskioldMedia\WP\PluginBase\Interfaces;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Interface Data_Store_Interface
+ * Interface DataStoreInterface
  *
  * @package BernskioldMedia\WP\PluginBase
  */
-interface Data_Store_Interface {
+interface DataStoreInterface {
 
 	/**
 	 * Get the object key.

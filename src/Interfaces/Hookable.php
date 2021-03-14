@@ -3,11 +3,11 @@
 namespace BernskioldMedia\WP\PluginBase\Interfaces;
 
 /**
- * Interface Hoookable
+ * Interface Hookable
  *
  * @package BernskioldMedia\WP\PluginBase\Interfaces
  */
-interface Hoookable {
+interface Hookable {
 
 	/**
 	 * Hookable classes must implement a standardized hooks function

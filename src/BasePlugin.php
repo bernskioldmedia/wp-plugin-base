@@ -1,15 +1,15 @@
 <?php
 
-namespace BernskioldMedia\WP\PluginBase\Abstracts;
+namespace BernskioldMedia\WP\PluginBase;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class Plugin
+ * Class BasePlugin
  *
  * @package BernskioldMedia\WP\PluginBase
  */
-abstract class Base_Plugin {
+abstract class BasePlugin {
 
 	/**
 	 * Version
@@ -45,6 +45,38 @@ abstract class Base_Plugin {
 	 * @var static
 	 */
 	protected static $_instance = null;
+
+	/**
+	 * Add a list of Facet classes here that will be
+	 * loaded alongside this plugin.
+	 *
+	 * @var string[]
+	 */
+	protected static $facets = [];
+
+	/**
+	 * The data stores (class names) that will be loaded
+	 * alongside this plugin.
+	 *
+	 * @var string[]
+	 */
+	protected static $data_stores = [];
+
+	/**
+	 * The REST endpoints (class names) that will be loaded
+	 * alongside this plugin.
+	 *
+	 * @var string[]
+	 */
+	protected static $rest_endpoints = [];
+
+	/**
+	 * Include a list of customizer section classes to
+	 * load them with the theme.
+	 *
+	 * @var array
+	 */
+	protected static $customizer_sections = [];
 
 	/**
 	 * Plugin Instantiator
@@ -100,6 +132,36 @@ abstract class Base_Plugin {
 
 		if ( method_exists( static::class, 'setup_admin_columns_storage_repository' ) ) {
 			add_action( 'acp/storage/repositories', [ static::class, 'setup_admin_columns_storage_repository' ] );
+		}
+
+		if ( ! empty( static::$data_stores ) ) {
+			foreach ( static::$data_stores as $data_store ) {
+				new $data_store();
+			}
+		}
+
+		if ( ! empty( static::$rest_endpoints ) ) {
+			foreach ( static::$rest_endpoints as $endpoint ) {
+				( new $endpoint() )->load();
+			}
+		}
+
+		if ( ! empty( static::$rest_endpoints ) ) {
+			foreach ( static::$rest_endpoints as $endpoint ) {
+				( new $endpoint() )->load();
+			}
+		}
+
+		if ( ! empty( static::$facets ) ) {
+			foreach ( static::$facets as $facet ) {
+				add_filter( 'facetwp_facets', [ $facet, 'make' ] );
+			}
+		}
+
+		if ( ! empty( static::$customizer_sections ) ) {
+			foreach ( static::$customizer_sections as $class ) {
+				new $class();
+			}
 		}
 	}
 

@@ -1,0 +1,118 @@
+<?php
+
+namespace {{ dataStoreNamespace }};
+
+use BernskioldMedia\WP\PluginBase\Data_Stores;
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Class {{ class }}
+ */
+class {{ class }} extends Data_Stores\Custom_Post_Type {
+
+	/**
+	 * Post Type Key
+	 *
+	 * @var string
+	 */
+	protected static $key = '{{ key }}';
+
+	/**
+	 * Plural Key
+	 *
+	 * @var string
+	 */
+	protected static $plural_key = '{{ key }}s';
+
+	/**
+	 * Class name of the data class.
+	 *
+	 * @var string
+	 */
+	protected static $data_class = {{ dataNamespace }}\{{ class }}::class;
+
+	/**
+	 * Array of metadata (field) keys.
+	 * Should map the getter/setter names in the data class.
+	 *
+	 * Will automatically be made available in the rest endpoint
+	 *
+	 * @var array
+	 */
+	public static $metadata = [];
+
+	/**
+	 * Register Post Type
+	 *
+	 * @see https://codex.wordpress.org/Function_Reference/register_post_type
+	 * @see https://codex.wordpress.org/Function_Reference/register_post_type#Parameters
+	 */
+	public static function register(): void {
+
+		$labels = [
+			'name'                  => _x( '{{ pluralName }}', 'Post Type General Name', '{{ textdomain }}' ),
+			'singular_name'         => _x( '{{ singularName }}', 'Post Type Singular Name', '{{ textdomain }}' ),
+			'menu_name'             => __( '{{ pluralName }}', '{{ textdomain }}' ),
+			'name_admin_bar'        => __( '{{ pluralName }}', '{{ textdomain }}' ),
+			'archives'              => __( '{{ pluralName }}', '{{ textdomain }}' ),
+			'parent_item_colon'     => __( 'Parent {{ singularName }}:', '{{ textdomain }}' ),
+			'all_items'             => __( 'All {{ pluralName }}', '{{ textdomain }}' ),
+			'add_new_item'          => __( 'Add New {{ singularName }}', '{{ textdomain }}' ),
+			'add_new'               => __( 'Add New', '{{ textdomain }}' ),
+			'new_item'              => __( 'New {{ singularName }}', '{{ textdomain }}' ),
+			'edit_item'             => __( 'Edit {{ singularName }}', '{{ textdomain }}' ),
+			'update_item'           => __( 'Update {{ singularName }}', '{{ textdomain }}' ),
+			'view_item'             => __( 'View {{ singularName }}', '{{ textdomain }}' ),
+			'search_items'          => __( 'Search {{ singularName }}', '{{ textdomain }}' ),
+			'not_found'             => __( 'Not found', '{{ textdomain }}' ),
+			'not_found_in_trash'    => __( 'Not found in Trash', '{{ textdomain }}' ),
+			'featured_image'        => __( 'Featured Image', '{{ textdomain }}' ),
+			'set_featured_image'    => __( 'Set Featured Image', '{{ textdomain }}' ),
+			'remove_featured_image' => __( 'Remove Featured Image', '{{ textdomain }}' ),
+			'use_featured_image'    => __( 'Use as Featured Image', '{{ textdomain }}' ),
+			'insert_into_item'      => __( 'Insert into {{ singularNameLowercase }}', '{{ textdomain }}' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this {{ singularNameLowercase }}', '{{ textdomain }}' ),
+			'items_list'            => __( '{{ pluralName }} list', '{{ textdomain }}' ),
+			'items_list_navigation' => __( '{{ pluralName }} list navigation', '{{ textdomain }}' ),
+			'filter_items_list'     => __( 'Filter {{ pluralNameLowercase }} list', '{{ textdomain }}' ),
+			'attributes'            => __( 'Attributes', '{{ textdomain }}' ),
+		];
+
+		$supports = [
+			'title',
+			'editor',
+			'revisions',
+		];
+
+		$args = [
+			'label'               => __( '{{ pluralName }}', '{{ textdomain }}' ),
+			'labels'              => $labels,
+			'supports'            => $supports,
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true, // Set this to string to make sub-page.
+			'menu_position'       => 20,
+			'menu_icon'           => 'dashicons-users',
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => true,
+			'can_export'          => true,
+			'has_archive'         => _x( '{{ slug }}', '{{ pluralNameLowercase }} post type archive slug', '{{ textdomain }}' ),
+			'rewrite'             => [
+				'slug'       => _x( '{{ slug }}', '{{ pluralNameLowercase }} post type single slug', '{{ textdomain }}' ),
+				'with_front' => false,
+			],
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'delete_with_user'    => null,
+			'show_in_rest'        => true, // Required for Gutenberg.
+			'capabilities'        => self::get_capabilities(),
+			'map_meta_cap'        => true,
+		];
+
+		register_post_type( self::get_key(), $args );
+
+	}
+
+}

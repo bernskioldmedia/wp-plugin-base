@@ -1,0 +1,86 @@
+<?php
+
+namespace {{ dataStoreNamespace }};
+
+use BernskioldMedia\WP\PluginBase\Data_Stores;
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Class {{ class }}
+ */
+class {{ class }} extends Data_Stores\Taxonomy {
+
+	/**
+	 * Taxonomy Key
+	 *
+	 * @var string
+	 */
+	protected static $key = '{{ key }}';
+
+	/**
+	 * Taxonomy Plural Key
+	 *
+	 * @var string
+	 */
+	protected static $plural_key = '{{ key }}s';
+
+	/**
+	 * Taxonomy Post Types
+	 *
+	 * @var string
+	 */
+	protected static $post_types = [];
+
+	/**
+	 * Register the taxonomy.
+	 *
+	 * @see https://developer.wordpress.org/reference/functions/register_taxonomy/
+	 */
+	public static function register() {
+
+		$labels = [
+			'name'                       => _x( '{{ pluralName }}', 'Taxonomy General Name', '{{ textdomain }}' ),
+			'singular_name'              => _x( '{{ singularName }}', 'Taxonomy Singular Name', '{{ textdomain }}' ),
+			'menu_name'                  => __( '{{ pluralName }}', '{{ textdomain }}' ),
+			'all_items'                  => __( 'All {{ pluralName }}', '{{ textdomain }}' ),
+			'parent_item'                => __( 'Parent {{ singularName }}', '{{ textdomain }}' ),
+			'parent_item_colon'          => __( 'Parent {{ singularName }}:', '{{ textdomain }}' ),
+			'new_item_name'              => __( 'New {{ singularName }} Name', '{{ textdomain }}' ),
+			'add_new_item'               => __( 'Add New {{ singularName }}', '{{ textdomain }}' ),
+			'edit_item'                  => __( 'Edit {{ singularName }}', '{{ textdomain }}' ),
+			'update_item'                => __( 'Update {{ singularName }}', '{{ textdomain }}' ),
+			'view_item'                  => __( 'View {{ singularName }}', '{{ textdomain }}' ),
+			'separate_items_with_commas' => __( 'Separate {{ pluralNameLowercase }} with commas', '{{ textdomain }}' ),
+			'add_or_remove_items'        => __( 'Add or remove {{ pluralNameLowercase }}', '{{ textdomain }}' ),
+			'choose_from_most_used'      => __( 'Choose from the most used', '{{ textdomain }}' ),
+			'popular_items'              => __( 'Popular {{ pluralName }}', '{{ textdomain }}' ),
+			'search_items'               => __( 'Search {{ pluralName }}', '{{ textdomain }}' ),
+			'not_found'                  => __( 'Not Found', '{{ textdomain }}' ),
+		];
+
+		$args = [
+			'labels'             => $labels,
+			'hierarchical'       => true,
+			'public'             => true,
+			'publicly_queryable' => true,
+			'show_ui'            => true,
+			'show_admin_column'  => true,
+			'show_in_menu'       => true,
+			'show_in_nav_menus'  => true,
+			'show_in_quick_edit' => true,
+			'show_in_rest'       => true, // Must be true for Gutenberg.
+			'show_tagcloud'      => false,
+			'rewrite'            => [
+				'slug'         => _x( '{{ slug }}', '{{ pluralNameLowercase }} taxonomy slug ', '{{ textdomain }}' ),
+				'with_front'   => false,
+				'hierarchical' => true,
+			],
+			'capabilities'       => self::get_capabilities(),
+		];
+
+		register_taxonomy( self::get_key(), self::get_post_type_keys(), $args );
+
+	}
+
+}

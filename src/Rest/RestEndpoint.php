@@ -7,18 +7,18 @@
  * @since   1.0.0
  */
 
-namespace BernskioldMedia\WP\PluginBase\Abstracts;
+namespace BernskioldMedia\WP\PluginBase\Rest;
 
-use BernskioldMedia\WP\PluginBase\Interfaces\REST_Endpoint_Interface;
+use BernskioldMedia\WP\PluginBase\Interfaces\RestEndpointInterface;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Class REST_Endpoint
+ * Class RestEndpoint
  *
  * @package BernskioldMedia\WP\PluginBase
  */
-abstract class REST_Endpoint extends \WP_REST_Controller implements REST_Endpoint_Interface {
+abstract class RestEndpoint extends \WP_REST_Controller implements RestEndpointInterface {
 
 	/**
 	 * Alias for GET method.
