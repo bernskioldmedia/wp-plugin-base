@@ -9,7 +9,7 @@ use function Symfony\Component\String\u;
 
 class DatastoreTaxonomyCommand extends MakeCommand {
 
-	protected static $basePath    = '/src/Data_Stores/';
+	protected static $basePath    = '/src/DataStores/';
 	protected static $defaultName = 'make:taxonomy';
 	protected static $stubName    = 'datastore.taxonomy';
 
