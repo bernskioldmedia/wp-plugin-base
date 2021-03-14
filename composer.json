@@ -8,7 +8,7 @@
 	"symfony/console": "^5.2",
 	"symfony/process": "5.0"
   },
-  "license": "GPL-3.0+",
+  "license": "MIT",
   "authors": [
 	{
 	  "name": "Bernskiold Media",
