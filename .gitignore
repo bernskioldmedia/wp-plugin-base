@@ -17,6 +17,9 @@
 # Ignore node_modules
 node_modules/
 
+# No lock file in package
+composer.lock
+
 # Ignore .idea
 .idea
 
