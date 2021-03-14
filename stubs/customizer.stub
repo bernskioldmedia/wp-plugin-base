@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use BernskioldMedia\WP\ThemeBase\Customizer\Customizer_Settings;
+
+class {{ class }} extends Customizer_Settings {
+
+	protected static $settings_prefix = '{{ prefix }}';
+
+	protected function setup(): void {
+        // Add your sections and settings here.
+	}
+
+}

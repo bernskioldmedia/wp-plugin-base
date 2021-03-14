@@ -13,5 +13,6 @@ $app = new Symfony\Component\Console\Application( 'WP Plugin Forge', '1.0.0' );
 $app->add( new BernskioldMedia\WP\PluginBase\Commands\DatastoreCptCommand );
 $app->add( new BernskioldMedia\WP\PluginBase\Commands\DatastoreTaxonomyCommand );
 $app->add( new BernskioldMedia\WP\PluginBase\Commands\RestEndpointCommand );
+$app->add( new BernskioldMedia\WP\PluginBase\Commands\CustomizerCommand );
 
 $app->run();
