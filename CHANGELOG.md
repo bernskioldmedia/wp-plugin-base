@@ -4,23 +4,25 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
-## Added
+## [2.0.0] - 2021-03-14
+
+### Added
 
 - New `forge` CLI for easy scaffolding.
 - Scaffolding for separating field groups into own classes for better organization. Add them to a data store by adding the class to an array.
 - Scaffolding for customizer sections. Just add them to an array in the base plugin class to load.
 - Scaffolding for adding FacetWP facets. Just add them to an array in the base plugin class to load.
 
-## Changed
+### Changed
 
 - Renamed classes and folders to consistently use CamelCase.
 - Simplified loading of data stores and rest endpoints, now just add them to the respective arrays in the base plugin class. No trait or boot method needed.
 
-## Deprecated
+### Deprecated
 
 - The `fields()` method on data stores should no longer be used, instead replaced by loading field group classes via the `$field_groups` property.
 
-## Removed
+### Removed
 
 - `Has_Data_Stores` trait, which is no longer needed.
 - `Has_Rest_Endpoints` trait, which is no longer needed.
