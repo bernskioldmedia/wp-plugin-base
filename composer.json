@@ -3,34 +3,34 @@
   "description": "A WordPress plugin base that contains helpful base classes and functions that we can extend upon when developing WordPress plugins.",
   "type": "library",
   "require": {
-	"monolog/monolog": "~1.25",
-	"php": ">=7.3",
-	"symfony/console": "^5.2",
-	"symfony/process": "5.0"
+    "monolog/monolog": "~1.25",
+    "php": ">=7.3|^8.0",
+    "symfony/console": "^5.2",
+    "symfony/process": "^5.0"
   },
   "license": "GPL-3.0+",
   "authors": [
-	{
-	  "name": "Bernskiold Media",
-	  "email": "hello@bernskioldmedia.com",
-	  "role": "agency",
-	  "homepage": "https://bernskioldmedia.com"
-	}
+    {
+      "name": "Bernskiold Media",
+      "email": "hello@bernskioldmedia.com",
+      "role": "agency",
+      "homepage": "https://bernskioldmedia.com"
+    }
   ],
   "autoload": {
-	"psr-4": {
-	  "BernskioldMedia\\WP\\PluginBase\\": "src/"
-	}
+    "psr-4": {
+      "BernskioldMedia\\WP\\PluginBase\\": "src/"
+    }
   },
   "bin": [
-	"bin/forge"
+    "bin/forge"
   ],
   "scripts": {
-	"lint": "phpcs .",
-	"lint-fix": "phpcbf ."
+    "lint": "phpcs .",
+    "lint-fix": "phpcbf ."
   },
   "config": {
-	"sort-packages": true
+    "sort-packages": true
   },
   "minimum-stability": "dev",
   "prefer-stable": true
