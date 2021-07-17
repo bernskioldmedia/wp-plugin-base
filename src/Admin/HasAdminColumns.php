@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  */
 trait HasAdminColumns {
 
-	public static function setup_admin_columns_storage_repository( array $repositories, \AC\ListScreenRepository\Storage\ListScreenRepositoryFactory $factory ): array {
+	public static function setup_admin_columns_storage_repository( array $repositories, $factory ): array {
 		// Ensure we also have data stores.
 		if ( ! property_exists( static::class, 'data_stores' ) ) {
 			return $repositories;
