@@ -125,7 +125,7 @@ abstract class BasePlugin {
 		add_action( 'init', [ static::class, 'load_languages' ] );
 
 		if ( method_exists( static::class, 'setup_admin_columns_storage_repository' ) ) {
-			add_action( 'acp/storage/repositories', [ static::class, 'setup_admin_columns_storage_repository' ] );
+			add_action( 'acp/storage/repositories', [ static::class, 'setup_admin_columns_storage_repository' ], 10, 2 );
 		}
 
 		if ( ! empty( static::$boot ) ) {
