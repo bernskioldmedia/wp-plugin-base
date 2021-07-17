@@ -47,7 +47,7 @@ abstract class DataStoreWP implements DataStoreInterface {
 	 * When set to true the admin columns in Admin Columns Pro
 	 * will be stored in a directory in this plugin as opposed to in the database.
 	 */
-	protected static bool $store_admin_columns = false;
+	public static bool $store_admin_columns = false;
 
 	/**
 	 * Add the field group class names here to automatically
