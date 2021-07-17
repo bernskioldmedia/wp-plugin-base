@@ -20,6 +20,8 @@ All notable changes to this project will be documented in this file. This projec
 ### Fixed
 
 - Customizer stub has correct namespace and class name.
+- Loading of admin columns works properly.
+- Relaxed Symfony console requirements so that it plays nice with php scoper.
 
 ## [2.0.1] - 2021-05-30
 
