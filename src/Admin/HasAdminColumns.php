@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
  */
 trait HasAdminColumns {
 
-	public static function setup_admin_columns_storage_repository( array $repositories, AC\ListScreenRepository\Storage\ListScreenRepositoryFactory $factory ): array {
+	public static function setup_admin_columns_storage_repository( array $repositories, \AC\ListScreenRepository\Storage\ListScreenRepositoryFactory $factory ): array {
 		// Ensure we also have data stores.
 		if ( ! property_exists( static::class, 'data_stores' ) ) {
 			return $repositories;
@@ -27,8 +27,8 @@ trait HasAdminColumns {
 				continue;
 			}
 
-			$rules = new AC\ListScreenRepository\Rules( AC\ListScreenRepository\Rules::MATCH_ANY );
-			$rules->add_rule( new AC\ListScreenRepository\Rule\EqualType( $data_store::get_key() ) );
+			$rules = new \AC\ListScreenRepository\Rules( \AC\ListScreenRepository\Rules::MATCH_ANY );
+			$rules->add_rule( new \AC\ListScreenRepository\Rule\EqualType( $data_store::get_key() ) );
 
 			$repositories[ 'data_store_' . $data_store::get_key() ] = $factory->create( static::get_path( 'admin-columns/' . $data_store::get_key() ),
 				static::is_admin_columns_writeable(), $rules );
