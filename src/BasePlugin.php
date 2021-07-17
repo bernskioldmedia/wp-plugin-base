@@ -79,18 +79,24 @@ abstract class BasePlugin {
 	protected static $customizer_sections = [];
 
 	/**
+	 * Include a list of classes to boot when the plugin runs.
+	 * These will all fire on the init_hooks method.
+	 *
+	 * @var array
+	 */
+	protected static $boot = [];
+
+	/**
 	 * Plugin Instantiator
 	 *
 	 * @return static
 	 */
 	public static function instance() {
-
 		if ( is_null( static::$_instance ) ) {
 			static::$_instance = new static();
 		}
 
 		return static::$_instance;
-
 	}
 
 	/**
@@ -113,7 +119,6 @@ abstract class BasePlugin {
 	 * Constructor
 	 */
 	public function __construct() {
-
 		if ( method_exists( static::class, 'has_dependencies' ) ) {
 			if ( static::has_dependencies() ) {
 				$this->init_hooks();
@@ -121,7 +126,6 @@ abstract class BasePlugin {
 		} else {
 			$this->init_hooks();
 		}
-
 	}
 
 	/**
@@ -132,6 +136,12 @@ abstract class BasePlugin {
 
 		if ( method_exists( static::class, 'setup_admin_columns_storage_repository' ) ) {
 			add_action( 'acp/storage/repositories', [ static::class, 'setup_admin_columns_storage_repository' ] );
+		}
+
+		if ( ! empty( static::$boot ) ) {
+			foreach ( static::$boot as $bootableClass ) {
+				$bootableClass::hooks();
+			}
 		}
 
 		if ( ! empty( static::$data_stores ) ) {
@@ -169,7 +179,6 @@ abstract class BasePlugin {
 	 * Load plugin translations.
 	 */
 	public static function load_languages(): void {
-
 		$locale = is_admin() && function_exists( 'get_user_locale' ) ? get_user_locale() : get_locale();
 		$locale = apply_filters( 'plugin_locale', $locale, static::get_textdomain() );
 
@@ -180,7 +189,6 @@ abstract class BasePlugin {
 
 		// Otherwise, load from the plugin.
 		load_plugin_textdomain( static::get_textdomain(), false, dirname( plugin_basename( static::$plugin_file_path ) ) . '/languages' );
-
 	}
 
 	/**

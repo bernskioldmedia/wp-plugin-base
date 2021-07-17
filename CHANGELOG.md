@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
-## [2.0.2] - 2021-07-17
+## [2.1.0] - 2021-07-17
+
+### Added
+
+- New bootable list to hook things on init faster.
 
 ### Changed
 

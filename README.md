@@ -108,6 +108,22 @@ Options:
 
 - `--namespace="MyPlugin\Namespace"` The root plugin namespace.
 
+## Booting Classes
+
+We typically need to boot (run) a series of classes and hooks/init functions when the plugin loads. This to boot further features.
+
+Normally we do this by running the function (usually containing action calls) within the `init_hooks()` function.
+
+To make this simpler, you can add your class to the `$boot = []` array on the base plugin class. It will then be run on the init hooks function automatically. This way you don't have to extend the init hooks method for simple bootable operations.
+
+**Note:** A function that you load via the boot property must implement the `Hookable` interface.
+
+```
+protected static $boot = [
+  Assets::class,
+];
+```
+
 ## Adding Admin Columns Support
 
 To easily share Admin Columns Pro sets between environments, it's often a good idea to commit them. To export and save them easily, the plugin base hooks into Admin Columns for
