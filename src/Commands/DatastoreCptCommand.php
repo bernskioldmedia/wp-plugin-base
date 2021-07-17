@@ -5,6 +5,7 @@ namespace BernskioldMedia\WP\PluginBase\Commands;
 use BernskioldMedia\WP\PluginBase\Inflect;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+
 use function Symfony\Component\String\u;
 
 class DatastoreCptCommand extends MakeCommand {

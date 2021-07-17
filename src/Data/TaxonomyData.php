@@ -32,8 +32,6 @@ abstract class TaxonomyData extends Data {
 	/**
 	 * Get Property
 	 *
-	 * @param  string  $field_key
-	 *
 	 * @return mixed|null
 	 */
 	protected function get_prop( string $field_key ) {
@@ -44,7 +42,7 @@ abstract class TaxonomyData extends Data {
 	 * Set property
 	 *
 	 * @param  string  $field_key
-	 * @param  mixed   $new_value
+	 * @param  mixed  $new_value
 	 *
 	 * @return bool|int|mixed
 	 */
@@ -54,8 +52,6 @@ abstract class TaxonomyData extends Data {
 
 	/**
 	 * Get the ID for use in get_field by ACF.
-	 *
-	 * @return string
 	 */
 	protected function get_id_for_acf(): string {
 		return 'term_' . $this->get_id();

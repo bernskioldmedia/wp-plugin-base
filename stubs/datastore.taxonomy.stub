@@ -6,56 +6,23 @@ use BernskioldMedia\WP\PluginBase\DataStores;
 
 defined( 'ABSPATH' ) || exit;
 
-/**
- * Class {{ class }}
- */
 class {{ class }} extends DataStores\Taxonomy {
 
-	/**
-	 * Taxonomy Key
-	 *
-	 * @var string
-	 */
-	protected static $key = '{{ key }}';
+	protected static string $key = '{{ key }}';
+	protected static string $plural_key = '{{ key }}s';
 
-	/**
-	 * Taxonomy Plural Key
-	 *
-	 * @var string
-	 */
-	protected static $plural_key = '{{ key }}s';
+	protected static array $post_types = [];
 
-	/**
-	 * Taxonomy Post Types
-	 *
-	 * @var string
-	 */
-	protected static $post_types = [];
+	public static array $metadata = [];
 
-	/**
-	 * Array of metadata (field) keys.
-	 * Should map the getter/setter names in the data class.
-	 *
-	 * Will automatically be made available in the rest endpoint
-	 *
-	 * @var array
-	 */
-	public static $metadata = [];
-
-	/**
-	 * Add the field group class names here to automatically
-	 * load them alongside this data store.
-	 *
-	 * @var string[]
-	 */
-	protected static $field_groups = [];
+	protected static array $field_groups = [];
 
 	/**
 	 * Register the taxonomy.
 	 *
 	 * @see https://developer.wordpress.org/reference/functions/register_taxonomy/
 	 */
-	public static function register() {
+	public static function register(): void {
 
 		$labels = [
 			'name'                       => _x( '{{ pluralName }}', 'Taxonomy General Name', '{{ textdomain }}' ),

@@ -1,12 +1,12 @@
 <?php
 
-namespace {{ namespace }};
+namespace {{ namespace }}\FacetWp;
 
 use BernskioldMedia\WP\PluginBase\FacetWp\Facet;
 
 class {{ class }} extends Facet {
 
-	protected static function get_data(): void {
+	protected static function get_data(): array {
 	    // Create your facets using the Facet WP UI and
 	    // export them to PHP, replacing this array with the
 	    // output options array you get from the exporter.

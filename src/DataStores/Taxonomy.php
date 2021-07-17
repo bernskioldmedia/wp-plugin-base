@@ -17,7 +17,6 @@
 namespace BernskioldMedia\WP\PluginBase\DataStores;
 
 use BernskioldMedia\WP\PluginBase\Exceptions\DataStoreException;
-use BernskioldMedia\WP\PluginBase\Log;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -30,17 +29,13 @@ abstract class Taxonomy extends DataStoreWP {
 
 	/**
 	 * Post type classes which this taxonomy is assigned to.
-	 *
-	 * @var array
 	 */
-	protected static $post_types = [];
+	protected static array $post_types = [];
 
 	/**
 	 * Default permissions for the taxonomy.
-	 *
-	 * @var \bool[][]
 	 */
-	protected static $default_permissions = [
+	protected static array $default_permissions = [
 		'administrator' => [
 			'manage' => true,
 			'assign' => true,
@@ -76,22 +71,15 @@ abstract class Taxonomy extends DataStoreWP {
 	/**
 	 * Handle the registration logic here to
 	 * set up and register the object with WordPress.
-	 *
-	 * @return void
 	 */
-	abstract public static function register();
+	abstract public static function register(): void;
 
 	/**
 	 * Create a new term in the taxonomy.
 	 *
-	 * @param  string  $name
-	 * @param  array   $args
-	 *
-	 * @return int
 	 * @throws DataStoreException
 	 */
-	public static function create( $name, $args = [] ): int {
-
+	public static function create( string $name, array $args = [] ): int {
 		if ( ! isset( $data['name'] ) ) {
 			throw new DataStoreException( 'Tried to create a term, but the term name was not passed correctly.', [
 				'taxonomy' => static::get_key(),
@@ -121,26 +109,15 @@ abstract class Taxonomy extends DataStoreWP {
 			] );
 		}
 
-		Log::info( 'Successfully created a new term.', [
-			'name'    => $data['name'],
-			'term_id' => $response['term_id'],
-		] );
-
 		return (int) $response['term_id'];
-
 	}
 
 	/**
 	 * Update a term.
 	 *
-	 * @param  int    $term_id
-	 * @param  array  $args
-	 *
-	 * @return int
 	 * @throws DataStoreException
 	 */
-	public static function update( $term_id, $args = [] ): int {
-
+	public static function update( int $term_id, array $args = [] ): int {
 		/**
 		 * Update the term with the data.
 		 */
@@ -159,27 +136,15 @@ abstract class Taxonomy extends DataStoreWP {
 			] );
 		}
 
-		Log::info( 'Successfully updated the term.', [
-			'taxonomy' => static::get_key(),
-			'term_id'  => $term_id,
-			'name'     => $args['name'],
-		] );
-
 		return (int) $updated['term_id'];
-
 	}
 
 	/**
 	 * Delete Term
 	 *
-	 * @param  int   $term_id
-	 * @param  bool  $force_delete
-	 *
-	 * @return bool
 	 * @throws DataStoreException
 	 */
-	public static function delete( $term_id, $force_delete = false ): bool {
-
+	public static function delete( int $term_id, bool $force_delete = false ): bool {
 		/**
 		 * For error handling...
 		 *
@@ -233,15 +198,12 @@ abstract class Taxonomy extends DataStoreWP {
 		 * we throw a false as a fallback.
 		 */
 		return false;
-
 	}
 
 	/**
 	 * Check if the term exists.
 	 *
 	 * @param  string|int  $term
-	 *
-	 * @return int|mixed
 	 */
 	public static function does_object_exist( $term ): ?int {
 		$term_exists = term_exists( $term, static::get_key() );
@@ -264,8 +226,6 @@ abstract class Taxonomy extends DataStoreWP {
 
 	/**
 	 * Get the Post Type Keys that this taxonomy is assigned to.
-	 *
-	 * @return array
 	 */
 	public static function get_post_type_keys(): array {
 		$output = [];
@@ -283,11 +243,8 @@ abstract class Taxonomy extends DataStoreWP {
 
 	/**
 	 * Get the default capabilities.
-	 *
-	 * @return string[]
 	 */
 	protected static function get_capabilities(): array {
-
 		$capabilities = [];
 
 		foreach ( static::$default_permissions['administrator'] as $permission => $is_granted ) {
@@ -295,7 +252,6 @@ abstract class Taxonomy extends DataStoreWP {
 		}
 
 		return $capabilities;
-
 	}
 
 }

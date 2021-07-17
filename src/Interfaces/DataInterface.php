@@ -23,78 +23,49 @@ interface DataInterface {
 
 	/**
 	 * Get ID
-	 *
-	 * @return int
 	 */
 	public function get_id(): int;
 
 	/**
 	 * Set ID
-	 *
-	 * @param  int $id
 	 */
 	public function set_id( int $id ): void;
 
 	/**
 	 * Get object type key.
-	 *
-	 * @return string
 	 */
 	public static function get_object_type(): string;
 
 	/**
 	 * Get data store class.
-	 *
-	 * @return string
 	 */
 	public static function get_data_store(): string;
 
 	/**
 	 * Find an object.
-	 *
-	 * @param  string $name
-	 *
-	 * @return static
 	 */
-	public static function find( $name );
+	public static function find( string $name );
 
 	/**
 	 * Find or Create Object
-	 *
-	 * @param  string $name
-	 *
-	 * @return static
 	 */
-	public static function find_or_create( $name );
+	public static function find_or_create( string $name );
 
 	/**
 	 * Create a new Object
-	 *
-	 * @param  string $name
-	 * @param  array  $args
-	 *
-	 * @return int
 	 */
-	public static function create( $name, $args = [] ): int;
+	public static function create( string $name, array $args = [] ): int;
 
 	/**
 	 * Update an object.
 	 *
-	 * @param  int   $object_id
-	 * @param  array $args
-	 *
 	 * @return mixed
 	 */
-	public static function update( $object_id, $args = [] );
+	public static function update( int $object_id, array $args = [] );
 
 	/**
 	 * Delete an object.
-	 *
-	 * @param  int  $object_id
-	 * @param  bool $force_delete
-	 *
-	 * @return bool
 	 */
-	public static function delete( $object_id, $force_delete = false ): bool;
+	public static function delete( int $object_id, bool $force_delete = false ): bool;
 
 }

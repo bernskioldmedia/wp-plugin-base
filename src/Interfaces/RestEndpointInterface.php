@@ -21,6 +21,6 @@ interface RestEndpointInterface {
 	/**
 	 * Register Routes
 	 */
-	public function register_routes();
+	public function register_routes(): void;
 
 }

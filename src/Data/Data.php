@@ -33,17 +33,13 @@ abstract class Data implements DataInterface {
 
 	/**
 	 * ID for this object.
-	 *
-	 * @var int
 	 */
-	protected $id = 0;
+	protected int $id = 0;
 
 	/**
 	 * Reference to the data store.
-	 *
-	 * @var string
 	 */
-	protected static $data_store;
+	protected static string $data_store;
 
 	/**
 	 * Data constructor.
@@ -58,8 +54,6 @@ abstract class Data implements DataInterface {
 
 	/**
 	 * Only store the object ID to avoid serializing the data object instance.
-	 *
-	 * @return array
 	 */
 	public function __sleep(): array {
 		return [ 'id' ];
@@ -80,8 +74,6 @@ abstract class Data implements DataInterface {
 
 	/**
 	 * Returns the unique ID for this object.
-	 *
-	 * @return int
 	 */
 	public function get_id(): int {
 		return $this->id;
@@ -89,8 +81,6 @@ abstract class Data implements DataInterface {
 
 	/**
 	 * Get Object Key
-	 *
-	 * @return string
 	 */
 	public static function get_object_type(): string {
 		return static::get_data_store()::get_key();
@@ -98,8 +88,6 @@ abstract class Data implements DataInterface {
 
 	/**
 	 * Get data store.
-	 *
-	 * @return string
 	 */
 	public static function get_data_store(): string {
 		return static::$data_store;
@@ -107,17 +95,13 @@ abstract class Data implements DataInterface {
 
 	/**
 	 * Set ID.
-	 *
-	 * @param  int  $id
 	 */
-	public function set_id( $id ): void {
+	public function set_id( int $id ): void {
 		$this->id = absint( $id );
 	}
 
 	/**
 	 * Get Property
-	 *
-	 * @param  string  $field_key
 	 *
 	 * @return mixed|null
 	 */
@@ -127,11 +111,6 @@ abstract class Data implements DataInterface {
 
 	/**
 	 * Get Date Prop
-	 *
-	 * @param  string  $field_key
-	 * @param  string  $format
-	 *
-	 * @return string|null
 	 */
 	protected function get_date_prop( string $field_key, string $format = 'Y-m-d' ): ?string {
 		$date = $this->get_prop( $field_key );
@@ -145,34 +124,27 @@ abstract class Data implements DataInterface {
 
 	/**
 	 * Get Boolean Prop
-	 *
-	 * @param  string  $field_key
-	 *
-	 * @return bool|null
 	 */
 	protected function get_bool_prop( string $field_key ): ?bool {
-		return $this->get_prop( $field_key ) ? true : false;
+		return (bool) $this->get_prop( $field_key );
 	}
 
 	/**
 	 * Get Term ID prop from WP Term returning field.
-	 *
-	 * @param  string  $field_key
-	 *
-	 * @return int|null
 	 */
 	protected function get_term_id_prop( string $field_key ): ?int {
 		$object = $this->get_prop( $field_key );
 
-		if ( ! $object ) {
-			return null;
-		}
-
-		return $object->term_id;
+		return $object->term_id ?? null;
 	}
 
+	/**
+	 * Get taxonomy property from ACF.
+	 * If multiple is true we return an array. Otherwise a WP_Term object.
+	 *
+	 * @return \WP_Term|array|null
+	 */
 	protected function get_taxonomy_prop( string $data_store, bool $multiple = false ) {
-
 		$taxonomy = $data_store::get_key();
 		$terms    = get_the_terms( $this->get_id(), $taxonomy );
 
@@ -185,7 +157,6 @@ abstract class Data implements DataInterface {
 		}
 
 		return $terms[0];
-
 	}
 
 	protected function get_taxonomy_string( string $data_store, string $separator = ', ', string $key = 'name' ): string {
@@ -208,14 +179,8 @@ abstract class Data implements DataInterface {
 	 * As type, this function takes: "edit", "delete" and "view".
 	 *
 	 * Defaults to current user if no user is given.
-	 *
-	 * @param  string    $type
-	 * @param  null|int  $user_id
-	 *
-	 * @return bool
 	 */
 	public function can_user( string $type, ?int $user_id = null ): bool {
-
 		if ( null === $user_id ) {
 			$user_id = get_current_user_id();
 		}
@@ -225,7 +190,6 @@ abstract class Data implements DataInterface {
 		}
 
 		switch ( $type ) {
-
 			case 'edit':
 			case 'update':
 				$capability = 'edit_' . static::get_data_store()::get_key();
@@ -241,22 +205,17 @@ abstract class Data implements DataInterface {
 			default:
 				$capability = 'read_' . static::get_data_store()::get_key();
 				break;
-
 		}
 
 		return user_can( $user_id, $capability, $this->get_id() );
-
 	}
 
 	/**
 	 * Find an object.
 	 *
-	 * @param  string  $name
-	 *
 	 * @return static|null
 	 */
-	public static function find( $name ) {
-
+	public static function find( string $name ) {
 		$id = static::get_data_store()::does_object_exist( $name );
 
 		if ( ! $id ) {
@@ -264,18 +223,14 @@ abstract class Data implements DataInterface {
 		}
 
 		return new static( $id );
-
 	}
 
 	/**
 	 * Find or Create Object
 	 *
-	 * @param  string  $name
-	 *
 	 * @return static
 	 */
-	public static function find_or_create( $name ) {
-
+	public static function find_or_create( string $name ) {
 		$id = static::get_data_store()::does_object_exist( $name );
 
 		if ( $id ) {
@@ -285,14 +240,13 @@ abstract class Data implements DataInterface {
 		$new_id = static::create( $name );
 
 		return new static( $new_id );
-
 	}
 
 	/**
 	 * Set property
 	 *
 	 * @param  string  $field_key
-	 * @param  mixed   $new_value
+	 * @param  mixed  $new_value
 	 *
 	 * @return bool|int|mixed
 	 */
@@ -303,47 +257,32 @@ abstract class Data implements DataInterface {
 	/**
 	 * Create an item.
 	 *
-	 * @param  string  $name
-	 * @param  array   $args
-	 *
 	 * @return int|null
 	 */
-	public static function create( $name, $args = [] ): int {
+	public static function create( string $name, array $args = [] ): int {
 		return static::get_data_store()::create( $name, $args );
 	}
 
 	/**
 	 * Update an object.
 	 *
-	 * @param  int    $object_id
-	 *
-	 * @param  array  $args
-	 *
 	 * @return mixed
 	 */
-	public static function update( $object_id, $args = [] ) {
+	public static function update( int $object_id, array $args = [] ) {
 		return static::get_data_store()::update( $object_id, $args );
 	}
 
 	/**
 	 * Delete an item.
-	 *
-	 * @param  int   $object_id
-	 * @param  bool  $force_delete
-	 *
-	 * @return bool
 	 */
-	public static function delete( $object_id, $force_delete = false ): bool {
+	public static function delete( int $object_id, bool $force_delete = false ): bool {
 		return static::get_data_store()::delete( $object_id, $force_delete );
 	}
 
 	/**
 	 * Convert all metadata to array.
-	 *
-	 * @return array
 	 */
 	public function to_array(): array {
-
 		if ( ! static::$data_store || ! static::$data_store::$metadata ) {
 			return [];
 		}
@@ -355,7 +294,6 @@ abstract class Data implements DataInterface {
 		}
 
 		return $data;
-
 	}
 
 }

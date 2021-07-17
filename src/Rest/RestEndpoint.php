@@ -47,29 +47,23 @@ abstract class RestEndpoint extends \WP_REST_Controller implements RestEndpointI
 
 	/**
 	 * Namespace
-	 *
-	 * @var string
 	 */
-	protected $namespace = 'wp_plugin_scaffold';
+	protected string $namespace = 'wp_plugin_scaffold';
 
 	/**
 	 * Version
-	 *
-	 * @var string
 	 */
-	protected $version = '1';
+	protected string $version = '1';
 
 	/**
 	 * REST Routes
-	 *
-	 * @var array
 	 */
-	protected $routes = [];
+	protected array $routes = [];
 
 	/**
 	 * Setup Extension
 	 */
-	public function load() {
+	public function load(): void {
 		$this->setup_routes();
 		$this->init();
 	}
@@ -99,30 +93,24 @@ abstract class RestEndpoint extends \WP_REST_Controller implements RestEndpointI
 
 	/**
 	 * Get sanitized URL param filter value.
-	 *
-	 * @param  \WP_REST_Request  $request
-	 * @param  string            $key
-	 *
-	 * @return string|null
 	 */
-	protected function get_filter_value( \WP_REST_Request $request, string $key ) {
+	protected function get_filter_value( \WP_REST_Request $request, string $key ): ?string {
 		return isset( $request[ $key ] ) ? wp_strip_all_tags( $request[ $key ] ) : null;
 	}
 
 	/**
 	 * Add a route
 	 *
-	 * @param  string  $route  NB. Prefix with /
-	 * @param  array   $args
+	 * @return static
 	 */
 	protected function add_route( string $route, array $args ) {
 		$this->routes[ $route ] = $args;
+
+		return $this;
 	}
 
 	/**
 	 * Get Endpoint Routes
-	 *
-	 * @return array
 	 */
 	protected function get_routes(): array {
 		return $this->routes;
@@ -130,8 +118,6 @@ abstract class RestEndpoint extends \WP_REST_Controller implements RestEndpointI
 
 	/**
 	 * Get the Namespace
-	 *
-	 * @return string
 	 */
 	protected function get_namespace(): string {
 		return $this->namespace . '/v' . $this->version;
@@ -139,8 +125,6 @@ abstract class RestEndpoint extends \WP_REST_Controller implements RestEndpointI
 
 	/**
 	 * Public level permissions access.
-	 *
-	 * @return bool
 	 */
 	public function has_public_access(): bool {
 		return true;

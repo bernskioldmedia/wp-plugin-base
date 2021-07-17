@@ -19,15 +19,13 @@ defined( 'ABSPATH' ) || exit;
  */
 trait HasAdminColumns {
 
-	public static function setup_admin_columns_storage_repository( array $repositories, ListScreenRepositoryFactory $factory ) {
-
+	public static function setup_admin_columns_storage_repository( array $repositories, ListScreenRepositoryFactory $factory ): array {
 		// Ensure we also have data stores.
 		if ( ! property_exists( static::class, 'data_stores' ) ) {
 			return $repositories;
 		}
 
 		foreach ( static::$data_stores as $data_store ) {
-
 			// Keep going if this data does doesn't allow storing.
 			if ( ! $data_store::$store_admin_columns ) {
 				continue;
@@ -41,7 +39,6 @@ trait HasAdminColumns {
 		}
 
 		return $repositories;
-
 	}
 
 	/**
@@ -50,8 +47,6 @@ trait HasAdminColumns {
 	 *
 	 * This defaults to false and should definitely be false on anything but temporary
 	 * local environments where you want to update.
-	 *
-	 * @return bool
 	 */
 	protected static function is_admin_columns_writeable(): bool {
 		return defined( 'ACP_COLUMNS_WRITABLE' ) ? ACP_COLUMNS_WRITABLE : false;

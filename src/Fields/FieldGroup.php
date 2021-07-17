@@ -2,9 +2,6 @@
 
 namespace BernskioldMedia\WP\PluginBase\Fields;
 
-/**
- * Class FieldGroup
- */
 abstract class FieldGroup {
 
 	public static function make(): void {

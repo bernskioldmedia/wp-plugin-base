@@ -6,49 +6,15 @@ use BernskioldMedia\WP\PluginBase\DataStores;
 
 defined( 'ABSPATH' ) || exit;
 
-/**
- * Class {{ class }}
- */
 class {{ class }} extends DataStores\Custom_Post_Type {
 
-	/**
-	 * Post Type Key
-	 *
-	 * @var string
-	 */
-	protected static $key = '{{ key }}';
+	protected static string $key = '{{ key }}';
+	protected static string $plural_key = '{{ key }}s';
+	protected static string $data_class = {{ dataNamespace }}\{{ class }}::class;
 
-	/**
-	 * Plural Key
-	 *
-	 * @var string
-	 */
-	protected static $plural_key = '{{ key }}s';
+	public static array $metadata = [];
 
-	/**
-	 * Class name of the data class.
-	 *
-	 * @var string
-	 */
-	protected static $data_class = {{ dataNamespace }}\{{ class }}::class;
-
-	/**
-	 * Array of metadata (field) keys.
-	 * Should map the getter/setter names in the data class.
-	 *
-	 * Will automatically be made available in the rest endpoint
-	 *
-	 * @var array
-	 */
-	public static $metadata = [];
-
-	/**
-	 * Add the field group class names here to automatically
-	 * load them alongside this data store.
-	 *
-	 * @var string[]
-	 */
-	protected static $field_groups = [];
+	protected static array $field_groups = [];
 
 	/**
 	 * Register Post Type

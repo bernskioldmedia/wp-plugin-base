@@ -30,31 +30,19 @@ interface DataStoreInterface {
 
 	/**
 	 * Create an item.
-	 *
-	 * @param  string $name
-	 * @param  array  $args
-	 *
-	 * @return int
 	 */
-	public static function create( $name, $args = [] ): int;
+	public static function create( string $name, array $args = [] ): int;
 
 	/**
 	 * Update an item with new values.
 	 *
-	 * @param  int          $object_id
-	 * @param  array|string $args
-	 *
 	 * @return mixed
 	 */
-	public static function update( $object_id, $args = [] );
+	public static function update( int $object_id, array $args = [] );
 
 	/**
 	 * Delete an item.
-	 *
-	 * @param  int $object_id
-	 *
-	 * @return mixed
 	 */
-	public static function delete( $object_id );
+	public static function delete( int $object_id, bool $skip_trash = false ): bool;
 
 }

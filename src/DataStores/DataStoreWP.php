@@ -13,63 +13,47 @@ abstract class DataStoreWP implements DataStoreInterface {
 
 	/**
 	 * Object Type Key
-	 *
-	 * @var string
 	 */
-	protected static $key;
+	protected static string $key;
 
 	/**
 	 * Object Type Plural Key
-	 *
-	 * @var string
 	 */
-	protected static $plural_key;
+	protected static string $plural_key;
 
 	/**
 	 * These permissions override the default set.
-	 *
-	 * @var array
 	 */
-	protected static $permissions = [];
+	protected static array $permissions = [];
 
 	/**
 	 * A list of default permissions for core roles.
-	 *
-	 * @var array
 	 */
-	protected static $default_permissions = [
+	protected static array $default_permissions = [
 		'administrator' => [],
 	];
 
 	/**
 	 * Array of metadata (field) keys.
-	 *
-	 * @var array
 	 */
-	public static $metadata = [];
+	public static array $metadata = [];
 
 	/**
 	 * Class name of the data class.
-	 *
-	 * @var string
 	 */
-	protected static $data_class;
+	protected static string $data_class;
 
 	/**
 	 * When set to true the admin columns in Admin Columns Pro
 	 * will be stored in a directory in this plugin as opposed to in the database.
-	 *
-	 * @var bool
 	 */
-	protected static $store_admin_columns = false;
+	protected static bool $store_admin_columns = false;
 
 	/**
 	 * Add the field group class names here to automatically
 	 * load them alongside this data store.
-	 *
-	 * @var string[]
 	 */
-	protected static $field_groups = [];
+	protected static array $field_groups = [];
 
 	/**
 	 * Custom_Post_Type constructor.
@@ -95,43 +79,25 @@ abstract class DataStoreWP implements DataStoreInterface {
 				add_action( 'init', [ $field_group, 'make' ], 30 );
 			}
 		}
-
 	}
 
 	/**
 	 * Create an item.
-	 *
-	 * @param  string  $name
-	 * @param  array   $args
-	 *
-	 * @return int
 	 */
-	abstract public static function create( $name, $args = [] ): int;
+	abstract public static function create( string $name, array $args = [] ): int;
 
 	/**
 	 * Update an item with new values.
-	 *
-	 * @param  int           $object_id
-	 * @param  array|string  $args
-	 *
-	 * @return int
 	 */
-	abstract public static function update( $object_id, $args = [] ): int;
+	abstract public static function update( int $object_id, array $args = [] ): int;
 
 	/**
 	 * Delete an item.
-	 *
-	 * @param  int   $object_id
-	 * @param  bool  $force_delete
-	 *
-	 * @return bool
 	 */
-	abstract public static function delete( $object_id, $force_delete = false ): bool;
+	abstract public static function delete( int $object_id, bool $force_delete = false ): bool;
 
 	/**
 	 * Get Object Type Key
-	 *
-	 * @return string
 	 */
 	public static function get_key(): string {
 		return static::$key;
@@ -139,8 +105,6 @@ abstract class DataStoreWP implements DataStoreInterface {
 
 	/**
 	 * Get Object Type Plural Key
-	 *
-	 * @return string
 	 */
 	public static function get_plural_key(): string {
 		return static::$plural_key;
@@ -148,14 +112,8 @@ abstract class DataStoreWP implements DataStoreInterface {
 
 	/**
 	 * Adds key to the capability.
-	 *
-	 * @param  string  $capability
-	 * @param  bool    $plural
-	 *
-	 * @return string
 	 */
-	protected static function add_key_to_capability( $capability, $plural = true ): string {
-
+	protected static function add_key_to_capability( string $capability, bool $plural = true ): string {
 		if ( ! $plural ) {
 			return $capability . '_' . static::get_key();
 		}
@@ -165,11 +123,8 @@ abstract class DataStoreWP implements DataStoreInterface {
 
 	/**
 	 * Add permissions to roles.
-	 *
-	 * @param  array  $permissions
 	 */
 	protected static function add_permissions_to_roles( array $permissions ): void {
-
 		foreach ( $permissions as $role => $capabilities ) {
 			$role = get_role( $role );
 
@@ -181,13 +136,10 @@ abstract class DataStoreWP implements DataStoreInterface {
 				$role->add_cap( static::add_key_to_capability( $capability ), $is_granted );
 			}
 		}
-
 	}
 
 	/**
 	 * Setup capabilities based on the defined permissions.
-	 *
-	 * @return void
 	 */
 	public static function setup_permissions(): void {
 		$permissions = wp_parse_args( static::$permissions, static::$default_permissions );
@@ -197,10 +149,6 @@ abstract class DataStoreWP implements DataStoreInterface {
 	/**
 	 * Helper wrapper to register a rest field based on the info
 	 * we already have in the data store.
-	 *
-	 * @param  string         $key
-	 * @param  callable|null  $get_callback
-	 * @param  callable|null  $update_callback
 	 */
 	protected static function register_rest_field( string $key, ?callable $get_callback, ?callable $update_callback = null ) {
 		register_rest_field( static::get_key(), $key, [
@@ -217,14 +165,12 @@ abstract class DataStoreWP implements DataStoreInterface {
 	 * setters and getters based on the metadata name.
 	 */
 	public static function rest_fields(): void {
-
 		if ( ! static::$metadata || ! static::$data_class ) {
 			return;
 		}
 
 		foreach ( static::$metadata as $meta ) {
 			static::register_rest_field( $meta, function ( $object ) use ( $meta ) {
-
 				/**
 				 * Get Callback
 				 */
@@ -240,9 +186,7 @@ abstract class DataStoreWP implements DataStoreInterface {
 				}
 
 				return $data->{"get_$meta"}();
-
 			}, function ( $value, $object ) use ( $meta ) {
-
 				/**
 				 * Update Callback
 				 */
@@ -250,13 +194,14 @@ abstract class DataStoreWP implements DataStoreInterface {
 				if ( $object['id'] ) {
 					$data = new static::$data_class( $object['id'] );
 
-					if ( method_exists( $data, "set_$meta" ) ) {
-						return $data->{"set_$meta"}();
+					if ( ! method_exists( $data, "set_$meta" ) ) {
+						return null;
 					}
+
+					return $data->{"set_$meta"}();
 				}
 			} );
 		}
-
 	}
 
 }

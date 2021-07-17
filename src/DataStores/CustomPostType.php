@@ -17,7 +17,6 @@
 namespace BernskioldMedia\WP\PluginBase\DataStores;
 
 use BernskioldMedia\WP\PluginBase\Exceptions\DataStoreException;
-use BernskioldMedia\WP\PluginBase\Log;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -30,17 +29,13 @@ abstract class CustomPostType extends DataStoreWP {
 	 * If this is set to false, we automatically deploy a feature to
 	 * disable the block editor for the data store instead using the
 	 * classic editor. Should be used sparingly.
-	 *
-	 * @var bool
 	 */
-	protected static $block_editor = true;
+	protected static bool $block_editor = true;
 
 	/**
 	 * Default permissions for the post type.
-	 *
-	 * @var \bool[][]
 	 */
-	protected static $default_permissions = [
+	protected static array $default_permissions = [
 		'administrator' => [
 			'read_private' => true,
 			'edit'         => true,
@@ -102,22 +97,15 @@ abstract class CustomPostType extends DataStoreWP {
 	/**
 	 * Handle the registration logic here to
 	 * set up and register the object with WordPress.
-	 *
-	 * @return void
 	 */
 	abstract public static function register(): void;
 
 	/**
 	 * Create Custom Post Type Object
 	 *
-	 * @param  string  $name
-	 * @param  array   $args
-	 *
-	 * @return int
 	 * @throws DataStoreException
 	 */
-	public static function create( $name, $args = [] ): int {
-
+	public static function create( string $name, array $args = [] ): int {
 		/**
 		 * Check that the required data for creation is set.
 		 */
@@ -147,29 +135,17 @@ abstract class CustomPostType extends DataStoreWP {
 				'error'     => $response->get_error_message(),
 				'post_data' => $post_data,
 			] );
-
 		}
 
-		Log::info( 'Successfully created a new object.', [
-			'object_id' => $response,
-			'post_data' => $post_data,
-		] );
-
 		return (int) $response;
-
 	}
 
 	/**
 	 * Updates a post.
 	 *
-	 * @param  int    $object_id
-	 * @param  array  $args
-	 *
-	 * @return int
 	 * @throws DataStoreException
 	 */
-	public static function update( $object_id, $args = [] ): int {
-
+	public static function update( int $object_id, array $args = [] ): int {
 		$data = wp_parse_args( $args, [
 			'ID'        => $object_id,
 			'post_type' => static::get_key(),
@@ -187,25 +163,15 @@ abstract class CustomPostType extends DataStoreWP {
 			] );
 		}
 
-		Log::info( 'Successfully updated an object.', [
-			'object_id' => $response,
-			'post_data' => $data,
-		] );
-
 		return (int) $response;
-
 	}
 
 	/**
 	 * Delete an object.
 	 *
-	 * @param  int   $object_id
-	 * @param  bool  $skip_trash
-	 *
-	 * @return bool
 	 * @throws DataStoreException
 	 */
-	public static function delete( $object_id, $skip_trash = false ): bool {
+	public static function delete( int $object_id, bool $skip_trash = false ): bool {
 		$response = wp_delete_post( $object_id, $skip_trash );
 
 		if ( false === $response ) {
@@ -215,24 +181,14 @@ abstract class CustomPostType extends DataStoreWP {
 			] );
 		}
 
-		Log::info( 'An object was successfully deleted.', [
-			'object_id'  => $object_id,
-			'skip_trash' => $skip_trash,
-		] );
-
 		return true;
 	}
 
 
 	/**
 	 * Check if posts exists. Returns integer if exists, or null.
-	 *
-	 * @param  string  $post_title
-	 *
-	 * @return null|int
 	 */
-	public static function does_object_exist( $post_title ): ?int {
-
+	public static function does_object_exist( string $post_title ): ?int {
 		$post = get_page_by_title( $post_title, OBJECT, static::get_key() );
 
 		if ( null !== $post ) {
@@ -240,19 +196,17 @@ abstract class CustomPostType extends DataStoreWP {
 		}
 
 		return null;
-
 	}
 
 	/**
 	 * Get and store terms from a taxonomy.
 	 *
-	 * @param  Data|integer  $object    Data object or object ID.
-	 * @param  string        $taxonomy  Taxonomy name e.g. product_cat.
+	 * @param  Data|integer  $object  Data object or object ID.
+	 * @param  string  $taxonomy  Taxonomy name e.g. product_cat.
 	 *
 	 * @return array of terms
 	 */
-	protected static function get_term_ids( $object, $taxonomy ): array {
-
+	protected static function get_term_ids( $object, string $taxonomy ): array {
 		if ( is_numeric( $object ) ) {
 			$object_id = $object;
 		} else {
@@ -274,7 +228,6 @@ abstract class CustomPostType extends DataStoreWP {
 	 * @return string[]
 	 */
 	protected static function get_capabilities(): array {
-
 		$capabilities = [
 			'edit_post'    => 'edit_' . static::get_key(),
 			'read_post'    => 'read_' . static::get_key(),
@@ -287,16 +240,10 @@ abstract class CustomPostType extends DataStoreWP {
 		}
 
 		return $capabilities;
-
 	}
 
 	/**
 	 * Disable Block Editor for the current post type.
-	 *
-	 * @param  bool    $current_status  Current Block Editor status.
-	 * @param  string  $post_type       Current Post Type Key.
-	 *
-	 * @return bool
 	 */
 	public static function disable_block_editor( bool $current_status, string $post_type ): bool {
 		if ( self::get_key() === $post_type ) {
@@ -318,7 +265,6 @@ abstract class CustomPostType extends DataStoreWP {
 		}
 
 		return '';
-
 	}
 
 }

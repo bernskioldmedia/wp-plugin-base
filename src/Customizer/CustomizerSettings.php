@@ -2,32 +2,25 @@
 
 namespace BernskioldMedia\WP\PluginBase\Customizer;
 
-use \WP_Customize_Control;
-use \WP_Customize_Manager;
+use WP_Customize_Control;
+use WP_Customize_Manager;
 
 /**
  * Class Customizer Settings
  */
 abstract class CustomizerSettings {
 
-	/**
-	 * @var WP_Customize_Manager
-	 */
-	protected $wp_customize;
+	protected WP_Customize_Manager $wp_customize;
 
 	/**
 	 * The prefix that we prefix all settings and sections with.
-	 *
-	 * @var string
 	 */
-	protected static $settings_prefix = '';
+	protected static string $settings_prefix = '';
 
 	/**
 	 * Default Settings Arguments
-	 *
-	 * @var array
 	 */
-	protected static $default_setting_args = [
+	protected static array $default_setting_args = [
 		'default'   => '',
 		'type'      => 'theme_mod',
 		'transport' => 'refresh',
@@ -35,10 +28,8 @@ abstract class CustomizerSettings {
 
 	/**
 	 * Default Control Settings
-	 *
-	 * @var array
 	 */
-	protected static $default_control_args = [
+	protected static array $default_control_args = [
 		'label'    => '',
 		'settings' => '',
 		'context'  => '',
@@ -59,8 +50,6 @@ abstract class CustomizerSettings {
 
 	/**
 	 * Register the customizer extension.
-	 *
-	 * @param  WP_Customize_Manager  $wp_customize  WP Customize Instance.
 	 */
 	public function register( WP_Customize_Manager $wp_customize ): void {
 		$this->wp_customize = $wp_customize;
@@ -81,18 +70,8 @@ abstract class CustomizerSettings {
 
 	/**
 	 * Adds the customizer setting and control.
-	 *
-	 * @param  string       $index            Array key index to use for the customizer setting.
-	 * @param  string       $control_type     Which control to create.
-	 * @param  array        $control_args     Customizer control object arguments.
-	 *                                        Only those different from the default need to be passed.
-	 * @param  string|null  $id               Optional. Customizer control object ID.
-	 *                                        Will default to 'pliant-' . $index.
-	 * @param  array        $custom_settings  Optional. Customizer setting arguments.
-	 *                                        Only those different from the default need to be passed.
 	 */
 	protected function add_setting_and_control( string $index, string $control_type, array $control_args, ?string $id = null, array $custom_settings = [] ): void {
-
 		$setting                  = sprintf( static::$settings_prefix . '_%s', $index );
 		$control_args             = array_merge( static::$default_control_args, $control_args );
 		$control_args['settings'] = $setting;

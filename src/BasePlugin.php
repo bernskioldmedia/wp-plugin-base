@@ -144,6 +144,10 @@ abstract class BasePlugin {
 			}
 		}
 
+		if ( method_exists( $this, 'load_blocks' ) ) {
+			$this->load_blocks();
+		}
+
 		if ( ! empty( static::$data_stores ) ) {
 			foreach ( static::$data_stores as $data_store ) {
 				new $data_store();

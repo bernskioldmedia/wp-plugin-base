@@ -9,11 +9,13 @@ All notable changes to this project will be documented in this file. This projec
 ### Added
 
 - New bootable list to hook things on init faster.
+- New integration with our Block Plugin Support trait that will autoload the blocks if the trait is present.
 
 ### Changed
 
 - Make logger abstract and with configurable paths.
 - Moved console dependency to dev.
+- Moved to minimum PHP 7.4 with typehinted code.
 
 ### Fixed
 

@@ -8,7 +8,7 @@ defined( 'ABSPATH' ) || exit;
 
 class {{ class }} extends {{ dataBaseClass }} {
 
-	protected static $data_store = {{ namespace }}\DataStores\{{ class }}::class;
+	protected static string $data_store = {{ namespace }}\DataStores\{{ class }}::class;
 
 	// Add your getters and setters here.
 

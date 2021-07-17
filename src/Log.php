@@ -33,16 +33,14 @@ abstract class Log {
 	 */
 	protected static $instance;
 
-	protected static $log_name;
+	protected static string $log_name;
 
-	protected static $log_path;
+	protected static string $log_path;
 
 	/**
 	 * Method to return the Monolog instance
-	 *
-	 * @return \Monolog\Logger
 	 */
-	public static function get() {
+	public static function get(): Logger {
 		if ( ! static::$instance ) {
 			static::configure();
 		}
@@ -53,7 +51,7 @@ abstract class Log {
 	/**
 	 * Configure Monolog to use a rotating files system.
 	 */
-	protected static function configure() {
+	protected static function configure(): void {
 		// Create the logger.
 		$logger = new Logger( static::$log_name );
 
@@ -73,83 +71,35 @@ abstract class Log {
 		static::$instance = $logger;
 	}
 
-	/**
-	 * Debug
-	 *
-	 * @param  string  $message  Message.
-	 * @param  array  $context  Data.
-	 */
-	public static function debug( $message, array $context = [] ) {
+	public static function debug( string $message, array $context = [] ): void {
 		static::get()->addDebug( $message, $context );
 	}
 
-	/**
-	 * Info
-	 *
-	 * @param  string  $message  Message.
-	 * @param  array  $context  Data.
-	 */
-	public static function info( $message, array $context = [] ) {
+	public static function info( string $message, array $context = [] ): void {
 		static::get()->addInfo( $message, $context );
 	}
 
-	/**
-	 * Notice
-	 *
-	 * @param  string  $message  Message.
-	 * @param  array  $context  Data.
-	 */
-	public static function notice( $message, array $context = [] ) {
+	public static function notice( string $message, array $context = [] ): void {
 		static::get()->addNotice( $message, $context );
 	}
 
-	/**
-	 * Warning
-	 *
-	 * @param  string  $message  Message.
-	 * @param  array  $context  Data.
-	 */
-	public static function warning( $message, array $context = [] ) {
+	public static function warning( string $message, array $context = [] ): void {
 		static::get()->addWarning( $message, $context );
 	}
 
-	/**
-	 * Error
-	 *
-	 * @param  string  $message  Message.
-	 * @param  array  $context  Data.
-	 */
-	public static function error( $message, array $context = [] ) {
+	public static function error( string $message, array $context = [] ): void {
 		static::get()->addError( $message, $context );
 	}
 
-	/**
-	 * Critical
-	 *
-	 * @param  string  $message  Message.
-	 * @param  array  $context  Data.
-	 */
-	public static function critical( $message, array $context = [] ) {
+	public static function critical( string $message, array $context = [] ): void {
 		static::get()->addCritical( $message, $context );
 	}
 
-	/**
-	 * Alert
-	 *
-	 * @param  string  $message  Message.
-	 * @param  array  $context  Data.
-	 */
-	public static function alert( $message, array $context = [] ) {
+	public static function alert( string $message, array $context = [] ): void {
 		static::get()->addAlert( $message, $context );
 	}
 
-	/**
-	 * Emergency
-	 *
-	 * @param  string  $message  Message.
-	 * @param  array  $context  Data.
-	 */
-	public static function emergency( $message, array $context = [] ) {
+	public static function emergency( string $message, array $context = [] ): void {
 		static::get()->addEmergency( $message, $context );
 	}
 
