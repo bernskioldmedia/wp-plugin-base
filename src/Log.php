@@ -24,7 +24,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package BernskioldMedia\WP\PluginBase
  */
-class Log {
+abstract class Log {
 
 	/**
 	 * Class Instance
@@ -33,29 +33,29 @@ class Log {
 	 */
 	protected static $instance;
 
+	protected static $log_name;
+
+	protected static $log_path;
+
 	/**
 	 * Method to return the Monolog instance
 	 *
 	 * @return \Monolog\Logger
 	 */
 	public static function get() {
-		if ( ! self::$instance ) {
-			self::configure();
+		if ( ! static::$instance ) {
+			static::configure();
 		}
 
-		return self::$instance;
+		return static::$instance;
 	}
 
 	/**
 	 * Configure Monolog to use a rotating files system.
 	 */
 	protected static function configure() {
-
-		// Set the log path outside of WordPress public!
-		$log_path = ABSPATH . '../logs/bm-plugins-log.log';
-
 		// Create the logger.
-		$logger = new Logger( 'bm-plugins-log' );
+		$logger = new Logger( static::$log_name );
 
 		// Define the log level depending on environment.
 
@@ -68,89 +68,89 @@ class Log {
 		}
 
 		// Set up the local saving.
-		$logger->pushHandler( new StreamHandler( $log_path, $log_level ) );
+		$logger->pushHandler( new StreamHandler( static::$log_path, $log_level ) );
 
-		self::$instance = $logger;
+		static::$instance = $logger;
 	}
 
 	/**
 	 * Debug
 	 *
 	 * @param  string  $message  Message.
-	 * @param  array   $context  Data.
+	 * @param  array  $context  Data.
 	 */
 	public static function debug( $message, array $context = [] ) {
-		self::get()->addDebug( $message, $context );
+		static::get()->addDebug( $message, $context );
 	}
 
 	/**
 	 * Info
 	 *
 	 * @param  string  $message  Message.
-	 * @param  array   $context  Data.
+	 * @param  array  $context  Data.
 	 */
 	public static function info( $message, array $context = [] ) {
-		self::get()->addInfo( $message, $context );
+		static::get()->addInfo( $message, $context );
 	}
 
 	/**
 	 * Notice
 	 *
 	 * @param  string  $message  Message.
-	 * @param  array   $context  Data.
+	 * @param  array  $context  Data.
 	 */
 	public static function notice( $message, array $context = [] ) {
-		self::get()->addNotice( $message, $context );
+		static::get()->addNotice( $message, $context );
 	}
 
 	/**
 	 * Warning
 	 *
 	 * @param  string  $message  Message.
-	 * @param  array   $context  Data.
+	 * @param  array  $context  Data.
 	 */
 	public static function warning( $message, array $context = [] ) {
-		self::get()->addWarning( $message, $context );
+		static::get()->addWarning( $message, $context );
 	}
 
 	/**
 	 * Error
 	 *
 	 * @param  string  $message  Message.
-	 * @param  array   $context  Data.
+	 * @param  array  $context  Data.
 	 */
 	public static function error( $message, array $context = [] ) {
-		self::get()->addError( $message, $context );
+		static::get()->addError( $message, $context );
 	}
 
 	/**
 	 * Critical
 	 *
 	 * @param  string  $message  Message.
-	 * @param  array   $context  Data.
+	 * @param  array  $context  Data.
 	 */
 	public static function critical( $message, array $context = [] ) {
-		self::get()->addCritical( $message, $context );
+		static::get()->addCritical( $message, $context );
 	}
 
 	/**
 	 * Alert
 	 *
 	 * @param  string  $message  Message.
-	 * @param  array   $context  Data.
+	 * @param  array  $context  Data.
 	 */
 	public static function alert( $message, array $context = [] ) {
-		self::get()->addAlert( $message, $context );
+		static::get()->addAlert( $message, $context );
 	}
 
 	/**
 	 * Emergency
 	 *
 	 * @param  string  $message  Message.
-	 * @param  array   $context  Data.
+	 * @param  array  $context  Data.
 	 */
 	public static function emergency( $message, array $context = [] ) {
-		self::get()->addEmergency( $message, $context );
+		static::get()->addEmergency( $message, $context );
 	}
 
 }

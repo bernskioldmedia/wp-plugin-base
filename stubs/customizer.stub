@@ -2,9 +2,9 @@
 
 namespace {{ namespace }};
 
-use BernskioldMedia\WP\PluginBase\Customizer\Customizer_Settings;
+use BernskioldMedia\WP\PluginBase\Customizer\CustomizerSettings;
 
-class {{ class }} extends Customizer_Settings {
+class {{ class }} extends CustomizerSettings {
 
 	protected static $settings_prefix = '{{ prefix }}';
 
