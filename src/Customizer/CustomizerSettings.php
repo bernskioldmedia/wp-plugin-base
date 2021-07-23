@@ -2,8 +2,8 @@
 
 namespace BernskioldMedia\WP\PluginBase\Customizer;
 
-use WP_Customize_Control;
-use WP_Customize_Manager;
+use \WP_Customize_Control;
+use \WP_Customize_Manager;
 
 /**
  * Class Customizer Settings

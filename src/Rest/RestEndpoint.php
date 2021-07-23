@@ -48,7 +48,7 @@ abstract class RestEndpoint extends \WP_REST_Controller implements RestEndpointI
 	/**
 	 * Namespace
 	 */
-	protected string $namespace = 'wp_plugin_scaffold';
+	protected $namespace = 'wp_plugin_scaffold';
 
 	/**
 	 * Version
