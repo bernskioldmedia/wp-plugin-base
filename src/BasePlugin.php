@@ -12,6 +12,11 @@ defined( 'ABSPATH' ) || exit;
 abstract class BasePlugin {
 
 	/**
+	 * A machine readable plugin slug, used to automatically prefix certain actions.
+	 */
+	protected static string $slug = 'wp_plugin_base';
+
+	/**
 	 * Version
 	 */
 	protected static string $version = '1.0.0';
@@ -123,6 +128,10 @@ abstract class BasePlugin {
 	 */
 	protected function init_hooks(): void {
 		add_action( 'init', [ static::class, 'load_languages' ] );
+
+		if ( method_exists( $this, 'register_blocks' ) ) {
+			add_action( 'init', [ $this, 'register_blocks' ] );
+		}
 
 		if ( method_exists( static::class, 'setup_admin_columns_storage_repository' ) ) {
 			add_action( 'acp/storage/repositories', [ static::class, 'setup_admin_columns_storage_repository' ], 10, 2 );

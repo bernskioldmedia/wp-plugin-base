@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [2.2.0] - 2021-07-23
+
+### Changed
+
+- Updated base plugin to support loading of blocks via the updated Block API.
+
 ## [2.1.0] - 2021-07-17
 
 ### Added
