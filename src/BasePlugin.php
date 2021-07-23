@@ -113,6 +113,8 @@ abstract class BasePlugin {
 				if ( method_exists( $this, 'load_blocks' ) ) {
 					$this->load_blocks();
 				}
+
+				do_action( static::$slug . '_loaded' );
 			}
 		} else {
 			$this->init_hooks();
@@ -120,6 +122,8 @@ abstract class BasePlugin {
 			if ( method_exists( $this, 'load_blocks' ) ) {
 				$this->load_blocks();
 			}
+
+			do_action( static::$slug . '_loaded' );
 		}
 	}
 
@@ -127,6 +131,8 @@ abstract class BasePlugin {
 	 * Hooks that are run on the time of init.
 	 */
 	protected function init_hooks(): void {
+		do_action( static::$slug . '_init_hooks' );
+
 		add_action( 'init', [ static::class, 'load_languages' ] );
 
 		if ( method_exists( $this, 'register_blocks' ) ) {

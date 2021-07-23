@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [2.2.0] - 2021-07-23
 
+### Added
+
+- A new plugin slug variable, used to create automatic action hooks.
+- New lifecycle action hooks.
+
 ### Changed
 
 - Updated base plugin to support loading of blocks via the updated Block API.
