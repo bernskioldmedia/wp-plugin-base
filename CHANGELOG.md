@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
-## [2.2.0] - 2021-07-23
+## [2.2.0] - 2021-07-24
 
 ### Added
 
@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file. This projec
 ### Changed
 
 - Updated base plugin to support loading of blocks via the updated Block API.
+
+### Fixed
+
+- Rest endpoint abstract would force a type that WordPress doesn't, causing an error.
 
 ## [2.1.0] - 2021-07-17
 
