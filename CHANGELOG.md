@@ -4,11 +4,15 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
-## [2.3.0]
+## [2.3.0] - 2021-07-26
 
 ### Added
 
 - New `AssetManager` class to simplify loading of assets.
+
+### Changed
+
+- `BasePlugin` is now a standard class that can be called, not just abstract.
 
 ## [2.2.0] - 2021-07-24
 
