@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @package BernskioldMedia\WP\PluginBase
  */
-abstract class BasePlugin {
+class BasePlugin {
 
 	/**
 	 * A machine readable plugin slug, used to automatically prefix certain actions.

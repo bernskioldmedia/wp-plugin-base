@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [2.3.0]
+
+### Added
+
+- New `AssetManager` class to simplify loading of assets.
+
 ## [2.2.0] - 2021-07-24
 
 ### Added
