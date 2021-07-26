@@ -31,6 +31,7 @@ In this plugin base you'll find classes to help you create:
 - Custom REST Endpoint
 - Customizer Settings
 - Admin Columns Pro Sets
+- Asset Loading
 
 ## Forge CLI
 
@@ -114,7 +115,8 @@ We typically need to boot (run) a series of classes and hooks/init functions whe
 
 Normally we do this by running the function (usually containing action calls) within the `init_hooks()` function.
 
-To make this simpler, you can add your class to the `$boot = []` array on the base plugin class. It will then be run on the init hooks function automatically. This way you don't have to extend the init hooks method for simple bootable operations.
+To make this simpler, you can add your class to the `$boot = []` array on the base plugin class. It will then be run on the init hooks function automatically. This way you don't
+have to extend the init hooks method for simple bootable operations.
 
 **Note:** A function that you load via the boot property must implement the `Hookable` interface.
 
@@ -123,6 +125,100 @@ protected static $boot = [
   Assets::class,
 ];
 ```
+
+## Loading Assets
+
+The abstract class `AssetManager` can be used to load styles and script both public or admin intelligently.
+
+It gives you two options. Either defining all values yourself, or if you are using `@wordpress/scripts` (which we almost always are), rely on the `name.asset.php` file that it
+generates for dependencies and version.
+
+The process is the same for public/admin scripts and styles.
+
+When extending the class, you can define four arrays and methods. The array properties auto-registers the scripts, while the four methods are responsible for enqueuing.
+
+Because you likely want to enqueue the scripts conditionally, the helper library doesn't do this automatically.
+
+### Registering scripts
+
+Registering scripts by using the asset meta file, requires just the simple config:
+
+```
+protected static array $public_scripts = [
+  'my-script' => 'assets/scripts/dist'
+];
+```
+
+This configuration assumes the following structure:
+
+1. Script is called `my-script.js`.
+2. Script is placed in the `assets/scripts/dist` folder.
+3. There is a `my-script.asset.php` file next to the script file in the same folder.
+
+Alternatively, you can define the full settings (with their defaults):
+
+```
+protected static array $public_scripts = [
+  'my-script' => [
+    'subfolder' => 'assets/scripts/dist', // Required.
+    'dependencies' => [], // Defaults to empty array if not set.
+    'version' => '1.0', // Defaults to plugin version if not set.
+    'in_footer' => true, // Defaults to true if not set.
+  ],
+];
+```
+
+Scripts are registered with the array key name as handle.
+
+### Registering styles
+
+Registering styles by using the asset meta file, requires just the simple config:
+
+```
+protected static array $public_styles = [
+  'my-style' => 'assets/styles/dist'
+];
+```
+
+This configuration assumes the following structure:
+
+1. Stylesheet is called `my-style.css`.
+2. Stylesheet is placed in the `assets/styles/dist` folder.
+3. There is a `my-style.asset.php` file next to the stylesheet file in the same folder.
+
+Alternatively, you can define the full settings (with their defaults):
+
+```
+protected static array $public_styles = [
+  'my-style' => [
+    'subfolder' => 'assets/styles/dist', // Required.
+    'dependencies' => [], // Defaults to empty array if not set.
+    'version' => '1.0', // Defaults to plugin version if not set.
+    'media' => 'screen', // Defaults to 'all' if not set.
+  ],
+];
+```
+
+Styles are registered with the array key name as handle.
+
+### Enqueue scripts and styles
+
+We don't automatically enqueue scripts or styles. Instead we have four magic methods that hook in correctly when defined. This allows you to conditionally enqueue scripts and styles easily as needed.
+
+When they exist in the file, they are hooked appropriately:
+
+```
+public static function enqueue_public_scripts(): void
+public static function enqueue_admin_scripts(): void
+public static function enqueue_public_styles(): void
+public static function enqueue_admin_styles(): void
+```
+
+They are run at priority 100 by default. To override, you can set the `protected static int $enqueue_priority`.
+
+### Customizing Register Priority
+
+By default we run the registration at priority 10. To customize, set the `protected static int $register_priority` to a custom value.
 
 ## Adding Admin Columns Support
 
