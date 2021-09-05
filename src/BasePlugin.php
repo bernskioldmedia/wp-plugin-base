@@ -87,22 +87,6 @@ class BasePlugin {
 	}
 
 	/**
-	 * Cloning is forbidden.
-	 *
-	 * @since 1.2
-	 */
-	private function __clone() {
-	}
-
-	/**
-	 * Unserializing instances of this class is forbidden.
-	 *
-	 * @since 1.2
-	 */
-	private function __wakeup() {
-	}
-
-	/**
 	 * Constructor
 	 */
 	public function __construct() {
