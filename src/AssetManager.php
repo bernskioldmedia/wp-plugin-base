@@ -86,38 +86,38 @@ abstract class AssetManager implements Hookable {
 		 * Register
 		 */
 		if ( ! empty( static::$public_scripts ) ) {
-			add_action( 'wp_enqueue_scripts', [ self::class, 'register_public_scripts' ], static::$register_priority );
+			add_action( 'wp_enqueue_scripts', [ static::class, 'register_public_scripts' ], static::$register_priority );
 		}
 
 		if ( ! empty( static::$admin_scripts ) ) {
-			add_action( 'admin_enqueue_scripts', [ self::class, 'register_admin_scripts' ], static::$register_priority );
+			add_action( 'admin_enqueue_scripts', [ static::class, 'register_admin_scripts' ], static::$register_priority );
 		}
 
 		if ( ! empty( static::$public_styles ) ) {
-			add_action( 'wp_enqueue_scripts', [ self::class, 'register_public_styles' ], static::$register_priority );
+			add_action( 'wp_enqueue_scripts', [ static::class, 'register_public_styles' ], static::$register_priority );
 		}
 
 		if ( ! empty( static::$admin_styles ) ) {
-			add_action( 'admin_enqueue_scripts', [ self::class, 'register_admin_styles' ], static::$register_priority );
+			add_action( 'admin_enqueue_scripts', [ static::class, 'register_admin_styles' ], static::$register_priority );
 		}
 
 		/**
 		 * Enqueue
 		 */
 		if ( method_exists( static::class, 'enqueue_public_scripts' ) ) {
-			add_action( 'wp_enqueue_scripts', [ self::class, 'enqueue_public_scripts' ], static::$enqueue_priority );
+			add_action( 'wp_enqueue_scripts', [ static::class, 'enqueue_public_scripts' ], static::$enqueue_priority );
 		}
 
 		if ( method_exists( static::class, 'enqueue_admin_scripts' ) ) {
-			add_action( 'admin_enqueue_scripts', [ self::class, 'enqueue_admin_scripts' ], static::$enqueue_priority );
+			add_action( 'admin_enqueue_scripts', [ static::class, 'enqueue_admin_scripts' ], static::$enqueue_priority );
 		}
 
 		if ( method_exists( static::class, 'enqueue_public_styles' ) ) {
-			add_action( 'wp_enqueue_scripts', [ self::class, 'enqueue_public_styles' ], static::$enqueue_priority );
+			add_action( 'wp_enqueue_scripts', [ static::class, 'enqueue_public_styles' ], static::$enqueue_priority );
 		}
 
 		if ( method_exists( static::class, 'enqueue_admin_styles' ) ) {
-			add_action( 'admin_enqueue_scripts', [ self::class, 'enqueue_admin_styles' ], static::$enqueue_priority );
+			add_action( 'admin_enqueue_scripts', [ static::class, 'enqueue_admin_styles' ], static::$enqueue_priority );
 		}
 	}
 
