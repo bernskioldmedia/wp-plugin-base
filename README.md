@@ -422,3 +422,25 @@ foreach( $items as $item ) {
 
 $job->save()->dispatch();
 ```
+
+### Adding a bulk action
+
+The framework contains an abstract class that you can extend to add a bulk action to one of the post type table views.
+
+```php
+use BernskioldMedia\WP\PluginBase\Admin\Bulk_Action;
+
+class My_Bulk_Action extends Bulk_Action {
+
+	protected static $scope = 'edit-post';
+	protected static $slug  = 'my_bulk_action';
+
+	public static function process( int $object_id ): void {
+        // Do something with each post here.
+	}
+
+	protected static function get_name(): string {
+		return __( 'My Bulk Action', 'TEXTDOMAIN' );
+	}
+}
+```
