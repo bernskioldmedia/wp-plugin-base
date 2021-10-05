@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file. This projec
 - New `forge setup:block-build` command to easily scaffold the block build process.
 - Abstract `Job` class for creating long-running background tasks.
 - Abstract `Bulk_Action` class for quickly scaffolding new bulk actions.
+- Abstract `Multisite_Tab` class for quicklt scaffolding a new tab in the network admin website edit view.
 
 ### Fixed
 

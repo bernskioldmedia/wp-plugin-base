@@ -444,3 +444,60 @@ class My_Bulk_Action extends Bulk_Action {
 	}
 }
 ```
+
+_Don't forget to load the bulk action by adding it to the `$boot` array in the main plugin file._
+
+### Adding a multisite tab
+
+Extend this abstract class to add a new tab to the network admin website edit screen.
+
+```php
+use BernskioldMedia\WP\PluginBase\Admin\Multisite_Tab;
+
+class My_Tab extends Multisite_Tab {
+
+	protected static string $nonce = 'my-tab-nonce';
+	protected static string $slug = 'my-tab';
+	protected static string $capability = 'manage_sites';
+
+	protected static function get_title(): string {
+		return __( 'My Tab', 'TEXTDOMAIN' );
+	}
+
+	public static function notice(): void {
+
+		if ( ! isset( $_GET['updated'], $_GET['page'] ) || self::$slug !== $_GET['page'] ) {
+			return;
+		}
+
+		?>
+		<div class="notice is-dismissible updated">
+			<p><?php esc_html_e( 'Success message.', 'TEXTDOMAIN' ); ?></p>
+		</div>
+		<?php
+
+	}
+
+	public static function save( WP_Site $site, $request_data ): void {
+        // Handle saving.
+	}
+
+	public static function render(): void {
+		$site = self::get_site_from_request();
+
+		if ( ! $site ) {
+			return;
+		}
+
+		?>
+		<div class="wrap">
+		    <p>Tab Content</p>
+		</div>
+		<?php
+
+	}
+
+}
+```
+
+_Don't forget to load the tab by adding it to the `$boot` array in the main plugin file._
