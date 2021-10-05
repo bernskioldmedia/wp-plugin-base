@@ -110,6 +110,21 @@ Options:
 
 - `--namespace="MyPlugin\Namespace"` The root plugin namespace.
 
+### `forge make:block {prefix} {name}` - Creating a custom block
+
+Generate all the files needed for a custom block.
+
+Options:
+
+- `--dynamic` or `-d` Creates a dynamic block which renders using PHP.
+- `--namespace="MyPlugin\Namespace"` The root plugin namespace. Only needed if dynamic is set.
+
+Example:
+
+```bash
+./bin/forge make:block bm my-block
+```
+
 ## Booting Classes
 
 We typically need to boot (run) a series of classes and hooks/init functions when the plugin loads. This to boot further features.
