@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. This projec
 ### Added
 
 - Integrated our block plugin support package into the plugin base for easier use and maintenance.
+- Added a `forge make:block` command to easily scaffold a new block.
 
 ### Fixed
 
