@@ -125,6 +125,10 @@ Example:
 ./bin/forge make:block bm my-block
 ```
 
+### `forge setup:block-build` - Sets up build assets for blocks
+
+Generates the webpack config file as well as requires all the various NPM dependencies for building blocks.
+
 ## Booting Classes
 
 We typically need to boot (run) a series of classes and hooks/init functions when the plugin loads. This to boot further features.

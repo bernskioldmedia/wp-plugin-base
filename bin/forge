@@ -19,5 +19,6 @@ $app->add( new BernskioldMedia\WP\PluginBase\Commands\FieldGroupCommand );
 $app->add( new BernskioldMedia\WP\PluginBase\Commands\DataCommand );
 $app->add( new BernskioldMedia\WP\PluginBase\Commands\FacetCommand );
 $app->add( new BernskioldMedia\WP\PluginBase\Commands\BlockCommand );
+$app->add( new BernskioldMedia\WP\PluginBase\Commands\SetupBlocksCommand );
 
 $app->run();

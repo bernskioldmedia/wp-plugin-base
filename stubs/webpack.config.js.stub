@@ -1,0 +1,114 @@
+const path = require( 'path' );
+const defaultConfig = require( '@wordpress/scripts/config/webpack.config' );
+const fastGlob = require( 'fast-glob' );
+const WebpackBar = require( 'webpackbar' );
+const ReplaceInFileWebpackPlugin = require( 'replace-in-file-webpack-plugin' );
+const CopyPlugin = require( 'copy-webpack-plugin' );
+
+/*
+ * Matches a block's name in paths in the form
+ * build-module/<blockName>/view.js
+ */
+const blockNameRegex = new RegExp( /(?<=blocks\/).*(?=(\/index))/g );
+
+const createBlockEntrypoints = () => {
+	/*
+	 * Returns an array of paths to view.js files within the `@wordpress/block-library` package.
+	 * These paths can be matched by the regex `blockNameRegex` in order to extract
+	 * the block's name.
+	 *
+	 * Returns an empty array if no files were found.
+	 */
+	const blockViewScriptPaths = fastGlob.sync(
+		'./blocks/**/index.js',
+	);
+
+	/*
+	 * Go through the paths found above, in order to define webpack entry points for
+	 * each block's view.js file.
+	 */
+	return blockViewScriptPaths.reduce( ( entries, scriptPath ) => {
+		const [ blockName ] = scriptPath.match( blockNameRegex );
+
+		return {
+			...entries,
+			[ blockName ]: scriptPath,
+		};
+	}, {} );
+};
+
+const sharedConfig = {
+	...defaultConfig,
+	externals: {
+		...defaultConfig.externals,
+		'@bernskioldmedia/wp-editor-components': [ 'bm', 'wpEditorComponents' ],
+	},
+	externalsType: 'window',
+	plugins: [
+		...defaultConfig.plugins,
+		new ReplaceInFileWebpackPlugin( [
+			{
+				dir: 'dist',
+				test: [ /\.js/ ],
+				rules: [
+					{
+						search: /TEXTDOMAIN/gi,
+						replace: 'bm-block-library',
+					},
+				],
+			},
+		] ),
+	],
+};
+
+const blocks = {
+	...sharedConfig,
+	entry: createBlockEntrypoints(),
+	output: {
+		path: path.resolve( process.cwd(), 'dist', 'blocks' ),
+		filename: '[name].js',
+		chunkFilename: '[name].js',
+	},
+	plugins: [
+		...sharedConfig.plugins,
+		new WebpackBar( {
+			name: 'Blocks',
+			color: '#cd1cec',
+		} ),
+	],
+};
+
+const publicScripts = {
+	...sharedConfig,
+	entry: {},
+	output: {
+		path: path.resolve( process.cwd(), 'dist', 'public' ),
+		filename: '[name].js',
+		chunkFilename: '[name].js',
+	},
+	plugins: [
+		...sharedConfig.plugins,
+		new WebpackBar( {
+			name: 'Public',
+			color: '#5aec1c',
+		} ),
+	],
+};
+
+const externals = {
+	...sharedConfig,
+	output: {
+		path: path.resolve( process.cwd(), 'dist' ),
+		filename: '[name].js',
+		chunkFilename: '[name].js',
+	},
+	plugins: [
+		new CopyPlugin( {
+			patterns: [
+				{ from: 'node_modules/@bernskioldmedia/wp-editor-components/build/index.js', to: 'wp-editor-components.js' },
+			],
+		} ),
+	],
+};
+
+module.exports = [ publicScripts, blocks, externals ];
