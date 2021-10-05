@@ -9,6 +9,7 @@ All notable changes to this project will be documented in this file. This projec
 - Integrated our block plugin support package into the plugin base for easier use and maintenance.
 - New `forge make:block` command to easily scaffold a new block.
 - New `forge setup:block-build` command to easily scaffold the block build process.
+- Abstract `Job` class for creating long-running background tasks.
 
 ### Fixed
 

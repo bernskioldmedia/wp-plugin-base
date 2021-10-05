@@ -33,6 +33,7 @@ In this plugin base you'll find classes to help you create:
 - Admin Columns Pro Sets
 - Asset Loading
 - Custom Blocks
+- Jobs Class
 
 ## Forge CLI
 
@@ -375,4 +376,49 @@ class My_Plugin extends BasePlugin {
     protected static string $block_prefix = 'my-prefix';
 
 }
+```
+
+### Defining a custom job
+
+When you have a long-running process that you need to run in the background, a job is what you want to run.
+
+```php
+use BernskioldMedia\WP\PluginBase\Jobs\Job;
+
+class My_Job extends Job {
+
+    protected $action = 'clone_media_job';
+
+	/**
+	 * Process the Queue
+	 *
+	 * @param  array  $data
+	 *
+	 * @return bool
+	 */
+	protected function task( $data ) {
+	    // Do things here...
+
+		return false;
+	}
+
+	protected function complete() {
+		parent::complete();
+        // This code will run once the entire job is complete.
+	}
+
+}
+```
+
+You can then dispatch your job like this:
+
+```php
+$job = new MyJob();
+
+foreach( $items as $item ) {
+    $item_data = [];
+    $job->push_to_queue( $item_data );
+}
+
+$job->save()->dispatch();
 ```
