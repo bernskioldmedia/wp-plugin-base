@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [2.4.1] - 2021-10-05
+
+### Fixed
+
+- Block scaffolding code did not export functions correctly.
+
 ## [2.4.0] - 2021-10-05
 
 ### Added
