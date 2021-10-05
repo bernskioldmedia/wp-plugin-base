@@ -32,6 +32,7 @@ In this plugin base you'll find classes to help you create:
 - Customizer Settings
 - Admin Columns Pro Sets
 - Asset Loading
+- Custom Blocks
 
 ## Forge CLI
 
@@ -203,7 +204,8 @@ Styles are registered with the array key name as handle.
 
 ### Enqueue scripts and styles
 
-We don't automatically enqueue scripts or styles. Instead we have four magic methods that hook in correctly when defined. This allows you to conditionally enqueue scripts and styles easily as needed.
+We don't automatically enqueue scripts or styles. Instead we have four magic methods that hook in correctly when defined. This allows you to conditionally enqueue scripts and
+styles easily as needed.
 
 When they exist in the file, they are hooked appropriately:
 
@@ -306,3 +308,52 @@ It also has some easy querying features that return the data class.
 - `::find_or_create( $name )` looks up an object based on the name, and creates it if it doesn't exist.
 
 You may convert all the data for an object into an array with the `to_array()` method.
+
+## Custom Blocks
+
+We find ourselves increasingly creating a bunch of plugins that add one or more blocks to the block editor. This requires a few functions to load and register.
+
+All you need to do is include the `Has_Blocks` trait in the base plugin class.
+
+Blocks are assumed to be placed in a `blocks` subfolder, and they are being built to `dist/blocks`.
+
+```
+use BernskioldMedia\WP\PluginBase\BasePlugin;
+use BernskioldMedia\WP\PluginBase\Blocks\Has_Blocks;
+
+class My_Plugin extends BasePlugin {
+    use Has_Blocks;
+
+}
+```
+
+### Required Folder Structure for Blocks
+
+The trait assumes the following folder structure:
+
+`blocks/` is the location of all blocks with one folder per block. The `index.js` file in each block folder is the entrypoint for the build script.
+
+`dist/blocks` is the location of built JavaScript blocks with the same filename as the main folder name.
+
+`languages/` is the location of the translation files. The handle and domain are both set to `{$block_prefix}-{$block_name}`.
+
+### Defining a custom block prefix
+
+The trait will default to using the 'bm' prefix for blocks. Blocks are named with a prefix to scope them to the project they are a part of. This also influences how the script and
+style handles are registered ($prefix-block-$block_name).
+
+Your project probably requires its custom prefix. You can set it on the main plugin class like so:
+
+```
+use BernskioldMedia\WP\PluginBase\BasePlugin;
+use BernskioldMedia\WP\PluginBase\Blocks\Has_Blocks;
+
+class My_Plugin extends BasePlugin {
+
+    use Has_Blocks;
+    
+    // Set my custom block prefix.
+    protected static string $block_prefix = 'my-prefix';
+
+}
+```
