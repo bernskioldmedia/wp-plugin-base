@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [2.4.0] - 2021-10-05
+
 ### Added
 
 - Integrated our block plugin support package into the plugin base for easier use and maintenance.
