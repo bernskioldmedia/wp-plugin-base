@@ -1,0 +1,13 @@
+import { useBlockProps } from '@wordpress/block-editor';
+
+function Edit(props) {
+    const { attributes, setAttributes } = props;
+
+    const blockProps = useBlockProps();
+
+    return (
+        <div { ...blockProps }>
+            <p>My Block</p>
+        </div>
+    );
+}

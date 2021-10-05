@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use \BernskioldMedia\WP\PluginBase\Blocks\Block;
+
+class {{ className }} extends Block {
+
+	protected static string $block_name = '{{ blockName }}';
+	protected static string $name       = '{{ blockSlug }}';
+
+	public static function render( array $attributes ): string {
+	    return '';
+	}
+}

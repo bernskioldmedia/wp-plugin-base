@@ -1,0 +1,17 @@
+{
+  "apiVersion": 2,
+  "name": "{{ blockName }}",
+  "title": "{{ blockTitle }}",
+  "description": "",
+  "category": "",
+  "textdomain": "",
+  "keywords": [],
+  "attributes": {},
+  "supports": {
+    "anchor": true,
+    "html": false
+  },
+  "editorScript": "{{ editorScript }}",
+  "editorStyle": "{{ editorStyle }}",
+  "style": "{{ style }}"
+}
